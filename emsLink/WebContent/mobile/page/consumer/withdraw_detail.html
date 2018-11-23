@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+        <title>提现记录</title>
+		<link rel="stylesheet" href="../../frozen/css/frozen.css">
+        <link rel="stylesheet" href="../../demo.css">
+        <link rel="stylesheet" href="../../common/jQuery-ztree/demo.css">
+        <link rel="stylesheet" href="../../common/jQuery-ztree/zTreeStyle.css">
+        <script src="../../frozen/lib/zepto.min.js"></script>
+        <script src="../../frozen/js/frozen.js"></script>
+        <script src="../../jQuery/jQuery-2.2.0.min.js"></script>
+        <script src="../../avalon/avalon.js"></script>
+        <script type="text/javascript" src="../../common/jQuery-ztree/jquery.ztree.core.min.js" > </script>
+		<script type="text/javascript" src="../../common/jQuery-ztree/jquery.ztree.all.min.js" > </script>
+		<script type="text/javascript" src="../../common/tools.js" > </script>
+        <script src="withdraw_detail.js"></script>
+    </head>
+	<body ms-controller="withdrawdetail">
+	
+		<ul class="ui-list ui-border-tb">
+    	<li ms-repeat-item="withdrawList">
+        	<!-- <div class="ui-list-thumb">
+            	<span style="background-image:url(http://placeholder.qiniudn.com/80x80)"></span>
+        	</div> -->
+        	<div class="ui-list-info ui-border-t">
+            	<p>编号：{{item.userName}}</p>
+            	<p>姓名：{{item.consumerName}}</p>
+            	<p>银行持卡人姓名：{{item.bankAccountName}}</p>
+            	<p>金额：{{item.withdrawCount}}</p>
+            	<p>扣车款：{{item.deduction}}</p>
+            	<p>实发：{{item.withdrawCount}}</p>
+            	<p>开户銀行：{{item.bankName}}</p>
+            	<p>银行所在地：{{item.bankAddress}}</p>
+            	<p>卡号：{{item.bankCard}}</p>
+            	<p>领取日期：{{item.withdrawDate}}</p>
+            	<p ms-visible="item.status == 0">状态：<span style="color:blue;">待处理</span></p>
+            	<p ms-visible="item.status == 1">状态：<span style="color:red;">已处理</span></p>
+            	<p>备注：{{item.remark}}</p>
+        	</div>
+    	</li>
+	</ul>
+	<div class="ui-list-info ui-border-t" style="text-align: center;" ms-if="withdrawList.length<=0">暂无提现记录！</div>
+	<div  ms-include-src="'../common/footer.html'"></div> 
+	</body>
+	
+</html>

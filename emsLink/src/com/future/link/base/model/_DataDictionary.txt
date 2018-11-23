@@ -1,0 +1,68 @@
+Table: base_menu
+-------------+--------------+------+-----+---------+---------
+ Field       | Type         | Null | Key | Default | Remarks 
+-------------+--------------+------+-----+---------+---------
+ id          | VARCHAR(50)  | NO   | PRI |         |         
+ name        | VARCHAR(50)  | YES  |     |         |         
+ description | VARCHAR(255) | YES  |     |         |         
+ route       | VARCHAR(255) | YES  |     |         |         
+ paths       | VARCHAR(255) | YES  |     |         |         
+ parentId    | VARCHAR(50)  | YES  |     |         |         
+ status      | INT(10)      | YES  |     |         |         
+ orderNum    | INT(10)      | YES  |     |         | 权重      
+ isLeaf      | INT(10)      | YES  |     |         |         
+-------------+--------------+------+-----+---------+---------
+
+Table: base_menu_btn
+---------+-------------+------+-----+---------+---------
+ Field   | Type        | Null | Key | Default | Remarks 
+---------+-------------+------+-----+---------+---------
+ id      | VARCHAR(50) | NO   | PRI |         |         
+ menuId  | VARCHAR(50) | YES  |     |         |         
+ btnName | VARCHAR(50) | YES  |     |         |         
+ btnType | VARCHAR(50) | YES  |     |         |         
+ status  | INT(10)     | YES  |     |         |         
+---------+-------------+------+-----+---------+---------
+
+Table: base_role
+-------------+--------------+------+-----+---------+---------
+ Field       | Type         | Null | Key | Default | Remarks 
+-------------+--------------+------+-----+---------+---------
+ id          | VARCHAR(50)  | NO   | PRI |         |         
+ name        | VARCHAR(50)  | YES  |     |         |         
+ description | VARCHAR(255) | YES  |     |         |         
+ createTime  | BIGINT(19)   | YES  |     |         |         
+ status      | INT(10)      | YES  |     |         |         
+-------------+--------------+------+-----+---------+---------
+
+Table: base_role_menu
+--------+-------------+------+-----+---------+---------
+ Field  | Type        | Null | Key | Default | Remarks 
+--------+-------------+------+-----+---------+---------
+ id     | VARCHAR(50) | NO   | PRI |         |         
+ roleId | VARCHAR(50) | YES  |     |         |         
+ menuId | VARCHAR(50) | YES  |     |         |         
+--------+-------------+------+-----+---------+---------
+
+Table: base_setting
+--------------------+--------------+------+-----+---------+---------
+ Field              | Type         | Null | Key | Default | Remarks 
+--------------------+--------------+------+-----+---------+---------
+ id                 | INT(10)      | NO   | PRI |         |         
+ withdrawalRatio    | DOUBLE(10,2) | YES  |     |         | 提现手续费率  
+ managementFeeRatio | DOUBLE(10,2) | YES  |     |         | 管理费率    
+ a_advertisingAward | DOUBLE(22)   | YES  |     |         | a区广告奖金  
+ b_advertisingAward | DOUBLE(22)   | YES  |     |         | b区广告奖金  
+ layerAward         | DOUBLE(22)   | YES  |     |         | 层奖      
+ ventureCapital     | DOUBLE(22)   | YES  |     |         | 创业奖金    
+--------------------+--------------+------+-----+---------+---------
+
+Table: base_user_role
+--------+-------------+------+-----+---------+---------
+ Field  | Type        | Null | Key | Default | Remarks 
+--------+-------------+------+-----+---------+---------
+ id     | VARCHAR(50) | NO   | PRI |         |         
+ userId | VARCHAR(50) | YES  |     |         |         
+ roleId | VARCHAR(50) | YES  |     |         |         
+--------+-------------+------+-----+---------+---------
+
