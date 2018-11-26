@@ -96,6 +96,9 @@ var vm = avalon.define({
 	},
 	showDialog:function(){
 		window.location.href = "#" + "/user/pwdmodify";
+	},
+	loginout:function(){
+		window.location.href = "login/login.html";
 	}
 	
 });
