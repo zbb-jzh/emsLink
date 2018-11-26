@@ -19,3 +19,19 @@ Table: user_user
  twoPassword | VARCHAR(50) | YES  |     |         | 二级密码    
 -------------+-------------+------+-----+---------+---------
 
+Table: user_wx_user
+------------+--------------+------+-----+---------+---------
+ Field      | Type         | Null | Key | Default | Remarks 
+------------+--------------+------+-----+---------+---------
+ id         | INT(10)      | NO   | PRI |         |         
+ openId     | VARCHAR(50)  | NO   |     |         | 微信名称    
+ nickName   | VARCHAR(100) | NO   |     |         |         
+ sex        | VARCHAR(20)  | YES  |     |         |         
+ province   | VARCHAR(20)  | YES  |     |         |         
+ city       | VARCHAR(20)  | YES  |     |         |         
+ country    | VARCHAR(20)  | YES  |     |         |         
+ headimgUrl | VARCHAR(500) | YES  |     |         |         
+ privilege  | VARCHAR(500) | YES  |     |         |         
+ unionId    | VARCHAR(50)  | YES  |     |         |         
+------------+--------------+------+-----+---------+---------
+

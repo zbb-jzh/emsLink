@@ -17,6 +17,7 @@ public class _MappingKit {
 
 	public static void mapping(ActiveRecordPlugin arp) {
 		arp.addMapping("user_user", "id", User.class);
+		arp.addMapping("user_wx_user", "id", WxUser.class);
 	}
 }
 

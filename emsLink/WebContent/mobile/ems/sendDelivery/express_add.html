@@ -25,7 +25,7 @@
             		<label>
                			 姓名
             		</label>
-            		<input type="text" style="line-height: 44px;" placeholder="请输入用户名" ms-attr-readonly="isUpdate" ms-duplex="send.name">
+            		<input type="text" style="line-height: 44px;" placeholder="请输入姓名" ms-attr-readonly="isUpdate" ms-duplex="send.name">
             			<a href="#" class="ui-icon-close" ms-click="removeInput('name')" ms-if="!isUpdate" ms-visible="send.name != ''">
             			</a>
         		</div>
@@ -39,30 +39,25 @@
         		</div>
         		
         		<div class="ui-form-item ui-form-item-show ui-border-b">
-                        <label>地址</label>
-                        <div class="ui-select-group">
+                        <label style="width:40px;">地址</label>
+                        <div class="ui-select-group" style="margin-left: 50px;">
                             <div class="ui-select">
-                                <select ms-duplex="address1">
-                                    <option>2014</option>
-                                    <option selected="">2015</option>
-                                    <option>2016</option>
+                                <select ms-duplex="address1" style="height: 100%;" ms-change="chagneZhen()">
+                                    <option ms-repeat-item="addressList" ms-attr-value="{{item.id}}">{{item.name}}</option> 
                                 </select>
                             </div>
                             <div class="ui-select">
-                                <select ms-duplex="address2">
-                                    <option>03</option>
-                                    <option selected="">04</option>
-                                    <option>05</option>
+                                <select ms-duplex="address2" style="height: 100%;">
+                                    <option ms-repeat-item="address1List" ms-attr-value="{{item.id}}">{{item.name}}</option> 
                                 </select>
                             </div>
-                            <div class="ui-select">
-                                <select ms-duplex="address3">
-                                    <option>21</option>
-                                    <option selected="">22</option>
-                                    <option>23</option>
-                                </select>
+                            <div style="float:left;">
+                            	<input type="text" style="line-height: 44px;padding-left: 0px;width:50px;" placeholder="庄名" ms-duplex="send.address">
+            					<!-- <label>庄</label> -->
                             </div>
+                            
                         </div>
+                        
                     </div>
     			<div class="ui-form-item ui-form-item-show ui-border-b">
             		<label>
@@ -80,7 +75,6 @@
         	
     <!-- </form> -->
 </div>
-<div  ms-include-src="'../common/footer.html'"></div> 
 	</body>
 
 </html>

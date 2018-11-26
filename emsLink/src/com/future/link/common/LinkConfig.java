@@ -1,4 +1,10 @@
 package com.future.link.common;
+import com.future.link.base.BaseRouter;
+import com.future.link.consumer.ConsumerRouter;
+import com.future.link.delivery.DeliveryRouter;
+import com.future.link.goods.GoodsRouter;
+import com.future.link.user.UserRouter;
+import com.future.link.wx.WXRouter;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
 import com.jfinal.config.Interceptors;
@@ -11,10 +17,6 @@ import com.jfinal.plugin.activerecord.CaseInsensitiveContainerFactory;
 import com.jfinal.plugin.activerecord.dialect.AnsiSqlDialect;
 import com.jfinal.plugin.activerecord.dialect.OracleDialect;
 import com.jfinal.plugin.c3p0.C3p0Plugin;
-import com.future.link.base.BaseRouter;
-import com.future.link.consumer.ConsumerRouter;
-import com.future.link.goods.GoodsRouter;
-import com.future.link.user.UserRouter;
 
 public class LinkConfig extends JFinalConfig{
 
@@ -23,6 +25,7 @@ public class LinkConfig extends JFinalConfig{
 		
 		//数据库配置
 		PropKit.use("DataBase.properties");
+		
 		me.setDevMode(true);
 	}
 
@@ -32,6 +35,8 @@ public class LinkConfig extends JFinalConfig{
 		me.add(new ConsumerRouter());
 		me.add(new GoodsRouter());
 		me.add(new BaseRouter());
+		me.add(new DeliveryRouter());
+		me.add(new WXRouter());
 	}
 	
 	/**
@@ -64,6 +69,7 @@ public class LinkConfig extends JFinalConfig{
 	public void configPlugin(Plugins me) {
 		
 		String dbType = PropKit.get("jdbc.dbType");
+		
 		C3p0Plugin cp = getC3p0Plugin(dbType);
 		
 		//Oracle驱动
@@ -88,6 +94,7 @@ public class LinkConfig extends JFinalConfig{
 		com.future.link.consumer.model._MappingKit.mapping(arp);
 		com.future.link.goods.model._MappingKit.mapping(arp);
 		com.future.link.base.model._MappingKit.mapping(arp);
+		com.future.link.delivery.model._MappingKit.mapping(arp);
 	}
 
 	@Override

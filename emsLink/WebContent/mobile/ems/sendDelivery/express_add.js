@@ -2,104 +2,14 @@
  * 
  */
 
-
-var setting = {
-        treeNodeKey: "id",
-        treeNodeParentKey: "parentId",
-
-//        view: {
-//            dblClickExpand: true
-//        },
-        check: {
-            enable: true,
-            chkStyle: "radio",  //单选框
-            radioType: "all"   //对所有节点设置单选
-//            chkStyle: "checkbox",
-//            chkboxType: {
-//                "Y": "ps", "N": "ps"
-//            }
-        },
-        data: {
-            simpleData: {
-                enable: true,
-                idKey: "id",
-                pIdKey: "parentId"
-
-            },
-            key: {
-                children: "nodes"
-            }, keep: {
-                parent: true,
-                open: true
-            }
-        },
-        callback: {
-            beforeCheck: zTreeBeforeCheck,
-            onClick: function (e, treeId, treeNode, clickFlag) { 
-            	zTreeObj.checkNode(treeNode, !treeNode.checked, true); 
-        }
-        }
-        
-    };
-
-var referrersetting = {
-        treeNodeKey: "id",
-        treeNodeParentKey: "parentId",
-
-//        view: {
-//            dblClickExpand: true
-//        },
-        check: {
-            enable: true,
-            chkStyle: "radio",  //单选框
-            radioType: "all"   //对所有节点设置单选
-//            chkStyle: "checkbox",
-//            chkboxType: {
-//                "Y": "ps", "N": "ps"
-//            }
-        },
-        data: {
-            simpleData: {
-                enable: true,
-                idKey: "id",
-                pIdKey: "parentId"
-
-            },
-            key: {
-                children: "nodes"
-            }, keep: {
-                parent: true,
-                open: true
-            }
-        },
-        callback: {
-            //beforeCheck: zTreeBeforeCheck,
-            onClick: function (e, treeId, treeNode, clickFlag) { 
-            	referrerztree.checkNode(treeNode, !treeNode.checked, true); 
-        }
-        }
-        
-    };
-
-var zTreeObj = null;
-
-var referrerztree = null;
-
-function zTreeBeforeCheck(treeId, treeNode){
-	console.log(treeNode);
-	if(treeNode.nodes.length >= 2){
-		alert("每个客户下只能有两个接点");
-		return false;
-	}
-	return true;
-}
-
 var vm = avalon.define({
 	$id:'expressadd',
-	send:{id:'',name:'', phone:'',address:'', remark:""},
-	address1:{},
-	address2:{},
-	address3:{},
+	send:{id:'',name:'', phone:'',townId:"",teamId:"",address:'', remark:""},
+	address1:"",
+	address2:"",
+	address3:"",
+	addressList:[],
+	address1List:[],
 	submited:false,
 	isUpdate:false,
 	getConsumer:function()
@@ -125,6 +35,64 @@ var vm = avalon.define({
 			});
 		}
 	},
+	getAddress:function(){
+		
+		$.ajax({
+		    url: "/link/delivery/doGetParent",    //请求的url地址
+		    dataType: "json",   //返回格式为json
+		    data: {},    //参数值
+		    type: "post",   //请求方式
+		    success: function(res) {
+		    	if (res.status == 100) {
+		    		vm.addressList = res.data;
+		    		vm.address1 = vm.addressList[0].id;
+		    		$.ajax({
+		    		    url: "/link/delivery/getChildren",    //请求的url地址
+		    		    dataType: "json",   //返回格式为json
+		    		    data: {pid:vm.addressList[0].id},    //参数值
+		    		    type: "post",   //请求方式
+		    		    success: function(res) {
+		    		    	if (res.status == 100) {
+		    		    		vm.address1List = res.data;
+		    		    		vm.address2 = vm.address1List[0].id;
+		                    }else{
+		                    	alert(res.data);
+		                    }
+		    		    },
+		    		    error: function() {
+		    		    	console.log('error');
+		    		    }
+		    		});
+                }else{
+                	alert(res.data);
+                }
+		    },
+		    error: function() {
+		    	console.log('error');
+		    }
+		});
+		
+	},
+	chagneZhen:function(){
+		
+		$.ajax({
+		    url: "/link/delivery/getChildren",    //请求的url地址
+		    dataType: "json",   //返回格式为json
+		    data: {pid:vm.address1},    //参数值
+		    type: "post",   //请求方式
+		    success: function(res) {
+		    	if (res.status == 100) {
+		    		vm.address1List = res.data;
+		    		vm.address2 = vm.address1List[0].id;
+                }else{
+                	alert(res.data);
+                }
+		    },
+		    error: function() {
+		    	console.log('error');
+		    }
+		});
+	},
 	add:function()
 	{
 		//vm.submited = true;
@@ -137,32 +105,19 @@ var vm = avalon.define({
 			return false;
 		}
 		
+		var regExpP = /^1[345789]\d{9}$/; //手机号
+
+	    if (!regExpP.test(vm.send.phone)) { //test检测$('#user_phone').val()是否符合regExp格式
+	    	alert("手机号格式不对！");
+	        return ;
+	    }
+		
 		if(vm.send.address == ''){
-			alert("地址不能为空！");
+			alert("庄名不能为空！");
 			return false;
 		}
-		var nodes = zTreeObj.getCheckedNodes();
-		if (null != nodes && nodes.length > 0) {
-            for (var i = 0; i < nodes.length; i++) {
-                
-            	vm.consumer.parentId = nodes[i].id;
-            }
-        }else if(nodes.length == 0){
-        	alert("客户接点不能为空！");
-			return false;
-        }
-        
-        var referrernodes = referrerztree.getCheckedNodes();
-		if (null != referrernodes && referrernodes.length > 0) {
-            for (var i = 0; i < referrernodes.length; i++) {
-                
-            	vm.consumer.referrerId = referrernodes[i].id;
-            }
-        }else if(referrernodes.length == 0){
-        	alert("推荐人不能为空！");
-			return false;
-        }
-		
+		vm.send.townId = vm.address1;
+		vm.send.teamId = vm.address2;
 		if(vm.consumerId)
 		{
 			if(vm.consumerId == vm.consumer.parentId){
@@ -170,9 +125,9 @@ var vm = avalon.define({
 				return false;
 			}
 			$.ajax({
-			    url: "../../../consumer/doUpdate",    //请求的url地址
+			    url: "../../../delivery/addSendDelivery",    //请求的url地址
 			    dataType: "json",   //返回格式为json
-			    data: param({consumer: vm.consumer}),    //参数值
+			    data: param({send: vm.send}),    //参数值
 			    type: "post",   //请求方式
 			    success: function(res) {
 			    	if (res.status == 1) {
@@ -189,15 +144,15 @@ var vm = avalon.define({
 			});
 		}else{
 			$.ajax({
-			    url: "../../../consumer/doAdd",    //请求的url地址
+			    url: "../../../delivery/addSendDelivery",    //请求的url地址
 			    dataType: "json",   //返回格式为json
-			    data: param({consumer: vm.consumer}),    //参数值
+			    data: param({send: vm.send}),    //参数值
 			    type: "post",   //请求方式
 			    success: function(res) {
 			    	if (res.status == 1) {
 			    		console.log('sucess');
-			    		alert("注册成功");
-			    		window.location.href = "consumer_node.html";
+			    		alert("下单成功");
+			    		//window.location.href = "consumer_node.html";
 			    		//vm.goback();
 	                }else{
 	                	alert(res.data);
@@ -209,51 +164,34 @@ var vm = avalon.define({
 			});
 		}
 	},
-	actionIcon:function(nodes){
-		//node[i].icon="../../common/images/zTreeStandard.png";
-		if(nodes != null && nodes.length > 0){
-			for(var i=0; i<nodes.length; i++){
-				
-				nodes[i].icon="../../common/images/zTreeStandard.png";
-				vm.actionIcon(nodes[i].nodes);
-			}
-		}
-		
-	},
-	getConsumerTreeList: function () {
-    	$.ajax({
-		    url: "/link/consumer/doTree",    //请求的url地址
+	pay:function(){
+		$.ajax({
+		    url: "../../../wx/wxPayH5",    //请求的url地址
 		    dataType: "json",   //返回格式为json
 		    data: {},    //参数值
 		    type: "post",   //请求方式
 		    success: function(res) {
-		    	if (res.status == 100) {
-		    		//vm.shopCategoryList = res.data;
-		    		res.data.icon="../../common/images/zTreeStandard.png";
-		    		vm.actionIcon(res.data.nodes);
-		    		/*for(var i=0; i<res.data.nodes.length; i++){
-		    			
-		    			//res.data.nodes[i].icon="../../common/images/zTreeStandard.png";
-		    			vm.actionIcon(res.data.nodes[i]);
-		    		
-		    		}*/
-		    		console.log(res)
-		            zTreeObj = $.fn.zTree.init($("#goodsCateory"), setting, res.data);
-		    		var nodes = zTreeObj.getNodes();
-		            zTreeObj.expandAll(true);
-		            
-		            referrerztree = $.fn.zTree.init($("#referrerztree"), referrersetting, res.data);
-		            referrerztree.expandAll(true);
-		            
-		            if(vm.consumer.id){
-		            	zTreeObj.checkNode(zTreeObj.getNodeByParam("id", vm.consumer.parentId, null), true, true);
-		            }
-		            
-                }else
-                	if(res.status == -114){
-                	window.location.href = "../checkpwd/check_pwd.html";
-                }else if(res.status == -110){
-                	window.location.href = "../login/login.html";
+		    	if (res.status == 1) {
+		    		console.log('sucess');
+		    		//alert("下单成功");
+		    		WeixinJSBridge.invoke('getBrandWCPayRequest',{
+		                "appId" : res.data.appid,
+		                "timeStamp" : res.data.timeStamp,
+		                "nonceStr" : res.data.nonceStr,
+		                "package" : res.data.package,
+		                "signType" : "MD5",
+		                "paySign" : res.data.paySign
+		            },function(res){
+		                WeixinJSBridge.log(res.err_msg);
+		                if(res.err_msg == "get_brand_wcpay_request:ok"){
+		                	alert("支付成功");
+
+		                }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
+		                	alert("用户取消支付");
+		                }else{
+		                	alert("支付失败");
+		                }
+		            })
                 }else{
                 	alert(res.data);
                 }
@@ -262,10 +200,7 @@ var vm = avalon.define({
 		    	console.log('error');
 		    }
 		});
-    },
-    zTreeBeforeCheck:function(treeId, treeNode){
-    	console.log(treeNode);
-    },
+	},
     removeInput:function(name){
     	vm.consumer[name] = '';
     },
@@ -274,7 +209,5 @@ var vm = avalon.define({
 		window.location.href = '#/consumer/list';
 	}
 });
-
-vm.getConsumer();
-vm.getConsumerTreeList();
+vm.getAddress();
 avalon.scan();

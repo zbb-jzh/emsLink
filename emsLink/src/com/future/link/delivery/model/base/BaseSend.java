@@ -65,4 +65,20 @@ public abstract class BaseSend<M extends BaseSend<M>> extends Model<M> implement
 		return get("status");
 	}
 
+	public void setTownId(java.lang.Long townId) {
+		set("townId", townId);
+	}
+
+	public java.lang.Long getTownId() {
+		return get("townId");
+	}
+
+	public void setTeamId(java.lang.Long teamId) {
+		set("teamId", teamId);
+	}
+
+	public java.lang.Long getTeamId() {
+		return get("teamId");
+	}
+
 }
