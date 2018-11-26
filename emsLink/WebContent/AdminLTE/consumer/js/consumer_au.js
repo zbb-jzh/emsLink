@@ -52,7 +52,7 @@ var vm = avalon.define({
 			});
 		}else{
 			$.ajax({
-			    url: "../consumer/doAdd",    //请求的url地址
+			    url: "../consumer/doAddNew",    //请求的url地址
 			    dataType: "json",   //返回格式为json
 			    data: param({consumer: vm.consumer}),    //参数值
 			    type: "post",   //请求方式

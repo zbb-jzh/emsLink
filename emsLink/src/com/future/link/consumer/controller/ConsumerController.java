@@ -35,6 +35,18 @@ public class ConsumerController extends Controller{
 	}
 	
 	@Before(AuthorityInterceptor.class)
+	public void doAddNew()
+	{
+		Consumer consumer = this.getModel(Consumer.class);
+		
+		if(null == consumer)
+		{
+			renderJson(new Result(-1000, "数据为空"));
+		}
+		renderJson(ConsumerService.service.addNew(consumer));
+	}
+	
+	@Before(AuthorityInterceptor.class)
 	public void doGetById()
 	{
 		String id = this.getPara("id");

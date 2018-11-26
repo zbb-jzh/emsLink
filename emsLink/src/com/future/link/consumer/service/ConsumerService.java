@@ -27,6 +27,18 @@ public class ConsumerService {
 	//层数
 	public static Integer floor = 2;
 	
+	@Before(Tx.class)
+	public Result addNew(Consumer consumer)
+	{
+		
+		consumer.setId(CommonUtil.getUUID());
+		consumer.setStatus(Consumer.UN_DELETE);
+		consumer.setOrigin(Consumer.ORIGIN_OFFLINE);
+		consumer.setCreateTime(ToolDateTime.getDateByTime());
+		consumer.save();
+		return new Result(Result.SUCCESS_STATUS, "添加成功");
+	}
+	
 	/**
 	 * 新增
 	 * @param user
