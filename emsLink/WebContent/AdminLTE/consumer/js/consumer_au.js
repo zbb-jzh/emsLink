@@ -30,13 +30,6 @@ var vm = avalon.define({
 		if(vm.consumer.name == '' && vm.consumer.phone == ''){
 			return;
 		}
-		var nodes = zTreeObj.getCheckedNodes();
-		if (null != nodes) {
-            for (var i = 0; i < nodes.length; i++) {
-                
-            	vm.consumer.parentId = nodes[i].id;
-            }
-        }
 		if(vm.consumerId)
 		{
 			
