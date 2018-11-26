@@ -8,8 +8,11 @@ Table: delivery_send
  address    | VARCHAR(500) | NO   |     |         | 地址      
  remark     | VARCHAR(200) | YES  |     |         |         
  createTime | DATETIME(19) | NO   |     |         |         
- status     | INT(10)      | NO   |     |         | 状态，0删除，1未支付，2，微信支付，3券支付
+ status     | INT(10)      | NO   |     | 1       | 状态，0删除，1未支付，2，微信支付，3券支付
  townId     | BIGINT(19)   | YES  |     |         | 镇id     
  teamId     | BIGINT(19)   | YES  |     |         | 大队      
+ wxUserId   | INT(10)      | YES  |     |         | 微信用户id  
+ kdyId      | VARCHAR(50)  | YES  |     |         | 快递员id   
+ yfPrice    | DOUBLE(22)   | YES  |     |         |         
 ------------+--------------+------+-----+---------+---------
 

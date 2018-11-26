@@ -8,7 +8,8 @@ var vm = avalon.define({
 	$id:'goodscategory',
 	submited:false,
 	goodsCategoryList:[],
-	category:{id:'', name:'', parentId:''},
+	kdyList:[],
+	category:{id:'', name:'', parentId:'',yfPrice:'',kdyId:''},
 	name:'',
 	hasAdd:false,
 	hasDelete:false,
@@ -17,6 +18,9 @@ var vm = avalon.define({
 	{
 		vm.submited = true;
 		if(vm.category.name==""){
+			return;
+		}
+		if(vm.category.yfPrice==""){
 			return;
 		}
 		if(vm.category.id){
@@ -36,8 +40,9 @@ var vm = avalon.define({
 			    		console.log('sucess');
 			    		vm.initTree();
 			    		vm.doGetParent();
+			    		vm.doGetKdy();
 			    		vm.submited = false;
-			    		vm.category = {id:'', name:'', parentId:''};
+			    		vm.category = {id:'', name:'', parentId:'',yfPrice:'',kdyId:''};
 	                }else{
 	                	alert(res.data);
 	                }
@@ -59,8 +64,9 @@ var vm = avalon.define({
 			    		console.log('sucess');
 			    		vm.initTree();
 			    		vm.doGetParent();
+			    		vm.doGetKdy();
 			    		vm.submited = false;
-			    		vm.category = {id:'', name:'', parentId:''};
+			    		vm.category = {id:'', name:'', parentId:'',yfPrice:'',kdyId:''};
 	                }else{
 	                	alert(res.data);
 	                }
@@ -85,7 +91,7 @@ var vm = avalon.define({
 		    		vm.initTree();
 		    		vm.doGetParent();
 		    		vm.submited = false;
-		    		vm.category = {id:'', name:'', parentId:''};
+		    		vm.category = {id:'', name:'', parentId:'',yfPrice:'',kdyId:''};
                 }else{
                 	alert(res.data);
                 }
@@ -97,7 +103,7 @@ var vm = avalon.define({
 	},
 	toAdd:function()
 	{
-		vm.category = {id:'', name:'', parentId:''};
+		vm.category = {id:'', name:'', parentId:'',yfPrice:'',kdyId:''};
 	},
 	init:function()
 	{
@@ -144,6 +150,8 @@ var vm = avalon.define({
         }
         vm.category.id = treeNode.id;
         vm.category.name = treeNode.name;
+        vm.category.yfPrice = treeNode.yfPrice;
+        vm.category.kdyId = treeNode.kdyId;
     },
 	doGetParent:function()
 	{
@@ -187,7 +195,28 @@ var vm = avalon.define({
 		    	console.log('error');
 		    }
 		});
-	}
+	},
+	doGetKdy:function()
+	{
+		$.ajax({
+		    url: "/link/consumer/doSearch",    //请求的url地址
+		    dataType: "json",   //返回格式为json
+		    data: {},    //参数值
+		    type: "post",   //请求方式
+		    success: function(res) {
+		    	if (res.status == 1) {
+		    		console.log('sucess');
+		    		vm.kdyList = res.data;
+		    		vm.category.kdyId = vm.kdyList[0].id;
+                }else{
+                	alert(res.data);
+                }
+		    },
+		    error: function() {
+		    	console.log('error');
+		    }
+		});
+	},
 	
 });
 if(btns[0].has){
@@ -201,4 +230,5 @@ if(btns[2].has){
 	vm.hasUpdate = true;
 }
 vm.init();
+vm.doGetKdy();
 avalon.scan();

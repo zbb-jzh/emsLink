@@ -4,6 +4,8 @@ import com.future.link.common.Result;
 import com.future.link.delivery.model.Send;
 import com.future.link.delivery.service.SendDeliveryService;
 import com.future.link.goods.service.CategoryService;
+import com.future.link.user.model.User;
+import com.future.link.user.model.WxUser;
 import com.future.link.utils.Constant;
 import com.jfinal.core.Controller;
 
@@ -16,6 +18,11 @@ public class DeliveryController extends Controller{
 	public void addSendDelivery() {
 		
 		Send send = getModel(Send.class);
+		WxUser user=(WxUser) this.getRequest().getSession().getAttribute("wxuser");
+		if(null != user) {
+			send.setWxUserId(user.getId());
+		}
+		
 		renderJson(SendDeliveryService.service.addSendDelivery(send));
 	}
 	

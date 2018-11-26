@@ -8,6 +8,8 @@ Table: goods_category
  status     | INT(10)     | NO   |     |         | 状态，1正常，0删除
  createTime | BIGINT(19)  | NO   |     |         | 创建时间    
  shopId     | VARCHAR(50) | YES  |     |         | 商家id    
+ kdyId      | VARCHAR(50) | YES  |     |         | 快递员id   
+ yfPrice    | DOUBLE(22)  | YES  |     |         | 运费      
 ------------+-------------+------+-----+---------+---------
 
 Table: goods_goods
@@ -16,9 +18,9 @@ Table: goods_goods
 -----------------+---------------+------+-----+---------+---------
  id              | VARCHAR(50)   | NO   | PRI |         |         
  name            | VARCHAR(50)   | NO   |     |         | 商品名称    
- shopId          | VARCHAR(50)   | NO   |     |         | 商品所属商家  
- categoryId      | VARCHAR(50)   | NO   |     |         | 所属分类    
- createUser      | VARCHAR(50)   | NO   |     |         | 创建人     
+ shopId          | VARCHAR(50)   | YES  |     |         | 商品所属商家  
+ categoryId      | VARCHAR(50)   | YES  |     |         | 所属分类    
+ createUser      | VARCHAR(50)   | YES  |     |         | 创建人     
  sellStatus      | INT(10)       | NO   |     |         | 销售状态    
  shopPrice       | DOUBLE(10)    | NO   |     |         | 价格      
  tag             | VARCHAR(100)  | YES  |     |         | 标签，让人第一眼对商品有个大概认识。
@@ -26,7 +28,7 @@ Table: goods_goods
  description     | VARCHAR(1000) | YES  |     |         | 描述      
  unit            | VARCHAR(20)   | NO   |     |         | 单位      
  imageUrl        | VARCHAR(500)  | NO   |     |         | 图片链接    
- quantity        | INT(10)       | NO   |     |         | 数量      
+ quantity        | INT(10)       | YES  |     |         | 数量      
  status          | INT(10)       | NO   |     |         | 状态，是否删除 
  deleteTime      | BIGINT(19)    | YES  |     |         | 删除时间    
  updateTime      | BIGINT(19)    | YES  |     |         | 更新时间    

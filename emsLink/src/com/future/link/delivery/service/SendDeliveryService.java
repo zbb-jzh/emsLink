@@ -14,7 +14,12 @@ public class SendDeliveryService {
 		
 		send.setCreateTime(ToolDateTime.getDate());
 		
-		send.setAddress(Category.dao.findById(send.getTownId()).getName() + Category.dao.findById(send.getTeamId()).getName() + send.getAddress());
+		Category category = Category.dao.findById(send.getTeamId());
+		
+		send.setKdyId(category.getKdyId());
+		send.setYfPrice(category.getYfPrice());
+		
+		send.setAddress(Category.dao.findById(send.getTownId()).getName() + category.getName() + send.getAddress());
 		send.save();
 		return new Result(Result.SUCCESS_STATUS, "添加成功");
 		

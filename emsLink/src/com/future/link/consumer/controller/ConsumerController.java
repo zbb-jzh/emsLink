@@ -248,4 +248,9 @@ public class ConsumerController extends Controller{
             this.renderJson(new Result(Result.SUCCESS_STATUS, ConsumerService.service.page(pageNumber, pageSize, name, type, startTime, endTime)));
         }
 	}
+	
+	@Before(AuthorityInterceptor.class)
+	public void doSearch() {
+		this.renderJson(new Result(Result.SUCCESS_STATUS, ConsumerService.service.search()));
+	}
 }

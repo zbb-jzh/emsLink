@@ -434,6 +434,10 @@ public class ConsumerService {
 		return list;
 	}
 	
+	public List<Consumer> search(){
+		return Consumer.dao.find(" select * from consumer_consumer where status = 1");
+	}
+	
 	/**
      * 分页查询
      * @return

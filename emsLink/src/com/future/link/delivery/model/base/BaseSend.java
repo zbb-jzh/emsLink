@@ -81,4 +81,28 @@ public abstract class BaseSend<M extends BaseSend<M>> extends Model<M> implement
 		return get("teamId");
 	}
 
+	public void setWxUserId(java.lang.Integer wxUserId) {
+		set("wxUserId", wxUserId);
+	}
+
+	public java.lang.Integer getWxUserId() {
+		return get("wxUserId");
+	}
+
+	public void setKdyId(java.lang.String kdyId) {
+		set("kdyId", kdyId);
+	}
+
+	public java.lang.String getKdyId() {
+		return get("kdyId");
+	}
+
+	public void setYfPrice(java.lang.Double yfPrice) {
+		set("yfPrice", yfPrice);
+	}
+
+	public java.lang.Double getYfPrice() {
+		return get("yfPrice");
+	}
+
 }

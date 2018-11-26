@@ -57,4 +57,20 @@ public abstract class BaseCategory<M extends BaseCategory<M>> extends Model<M> i
 		return get("shopId");
 	}
 
+	public void setKdyId(java.lang.String kdyId) {
+		set("kdyId", kdyId);
+	}
+
+	public java.lang.String getKdyId() {
+		return get("kdyId");
+	}
+
+	public void setYfPrice(java.lang.Double yfPrice) {
+		set("yfPrice", yfPrice);
+	}
+
+	public java.lang.Double getYfPrice() {
+		return get("yfPrice");
+	}
+
 }

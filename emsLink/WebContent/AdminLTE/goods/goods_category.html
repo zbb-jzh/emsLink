@@ -11,16 +11,16 @@
     <div ms-click="toAdd()" class="btn-search" style="margin-right: 40px;margin-top:20px;" ms-if="hasAdd"><i></i>添加分类</div>
     <div class="box-body mt60">
         <div class="col-md-2">
-            <div class="ca-list">分类列表</div>
+            <div class="ca-list">地址列表</div>
             <ul id="goodsCateory" class="ztree"></ul>
         </div>
         <div class="col-md-9" style="float: right;">
-            <div class="right-top">编辑分类</div>
+            <div class="right-top">编辑地址</div>
                 <div style="margin-top:20px;margin-bottom: 10px">
                     <form role="form" class="form-horizontal">
                         <!-- --><div class="form-group has-feedback">
-                            <label class="col-md-1 control-label">父分类</label>
-                            <div class="col-md-2">
+                            <label class="col-md-2 control-label">父分类</label>
+                            <div class="col-md-6">
                                 <select ms-duplex="category.parentId" class="form-control select2 " style="width: 100%;" tabindex="-1" aria-hidden="true">
                                     <option  value="">无</option>
                                      <option ms-repeat-item="goodsCategoryList" ms-attr-value="{{item.id}}">{{item.name}}</option> 
@@ -29,15 +29,34 @@
                         </div>
                         <div class="form-group has-feedback" ms-class="has-warning:category.name == '' && submited">
 
-                            <label class="col-md-1 control-label">名称</label>
-                            <div class="col-md-3">
-                                <input class="form-control"  placeholder="商品分类名称" ms-duplex="category.name" id="name"/>
+                            <label class="col-md-2 control-label">地址名称</label>
+                            <div class="col-md-6">
+                                <input class="form-control"  placeholder="地址" ms-duplex="category.name" id="name"/>
                             </div>
                             <label class="control-label" for="name">
-                                <span ms-if="category.name == '' && submited">请输入名称</span>
+                                <span ms-if="category.name == '' && submited">请输入地址</span>
                             </label>
                         </div>
-                        <div class="col-md-3" style="margin-left: 70px;">
+                        <div class="form-group has-feedback" ms-class="has-warning:category.yfPrice == '' && submited">
+
+                            <label class="col-md-2 control-label">运费</label>
+                            <div class="col-md-6">
+                                <input class="form-control"  placeholder="运费" ms-duplex="category.yfPrice" id="yfPrice"/>
+                            </div>
+                            <label class="control-label" for="yfPrice">
+                                <span ms-if="category.yfPrice == '' && submited">请输入运费</span>
+                            </label>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label class="col-md-2 control-label">关联快递员</label>
+                            <div class="col-md-6">
+                                <select ms-duplex="category.kdyId" class="form-control select2 " style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                    <!-- <option  value="">无</option> -->
+                                     <option ms-repeat-item="kdyList" ms-attr-value="{{item.id}}">{{item.name}}</option> 
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="margin-left: 170px;">
                             <button ms-click="doAU" type="button" class="btn btn-sure" ms-if="category.id=='' && hasAdd">新增</button>
                             <button ms-click="doAU" type="button" class="btn btn-sure" ms-if="category.id!='' && hasUpdate">修改</button>
                             <button ms-click="doDelete" type="button"class="btn btn-cancel" ms-if="category.id!='' && hasDelete">删除</button>
