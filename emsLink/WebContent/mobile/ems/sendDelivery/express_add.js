@@ -4,7 +4,7 @@
 
 var vm = avalon.define({
 	$id:'expressadd',
-	send:{id:'',name:'', phone:'',townId:"",teamId:"",address:'', remark:""},
+	send:{id:'',name:'', phone:'',townId:"",teamId:"",address:'', remark:"", yfPrice:''},
 	address1:"",
 	address2:"",
 	address3:"",
@@ -55,6 +55,7 @@ var vm = avalon.define({
 		    		    	if (res.status == 100) {
 		    		    		vm.address1List = res.data;
 		    		    		vm.address2 = vm.address1List[0].id;
+		    		    		vm.send.yfPrice = vm.address1List[0].yfPrice;
 		                    }else{
 		                    	alert(res.data);
 		                    }
@@ -84,6 +85,7 @@ var vm = avalon.define({
 		    	if (res.status == 100) {
 		    		vm.address1List = res.data;
 		    		vm.address2 = vm.address1List[0].id;
+		    		vm.send.yfPrice = vm.address1List[0].yfPrice;
                 }else{
                 	alert(res.data);
                 }
@@ -92,6 +94,15 @@ var vm = avalon.define({
 		    	console.log('error');
 		    }
 		});
+	},
+	chagneCun:function(){
+		
+		for(var i=0; i<vm.address1List.length; i++){
+			if(vm.address2 == vm.address1List[i].id){
+				vm.send.yfPrice = vm.address1List[i].yfPrice;
+			}
+			
+		}
 	},
 	add:function()
 	{
@@ -120,10 +131,6 @@ var vm = avalon.define({
 		vm.send.teamId = vm.address2;
 		if(vm.consumerId)
 		{
-			if(vm.consumerId == vm.consumer.parentId){
-				alert('自己不能选择自己');
-				return false;
-			}
 			$.ajax({
 			    url: "../../../delivery/addSendDelivery",    //请求的url地址
 			    dataType: "json",   //返回格式为json

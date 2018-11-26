@@ -47,7 +47,7 @@
                                 </select>
                             </div>
                             <div class="ui-select">
-                                <select ms-duplex="address2" style="height: 100%;">
+                                <select ms-duplex="address2" style="height: 100%;" ms-change="chagneCun()">
                                     <option ms-repeat-item="address1List" ms-attr-value="{{item.id}}">{{item.name}}</option> 
                                 </select>
                             </div>
@@ -59,6 +59,15 @@
                         </div>
                         
                     </div>
+                    <div class="ui-form-item ui-form-item-show ui-border-b">
+            		<label>
+               			 费用
+            		</label>
+            		<input type="text" style="line-height: 44px;width: 50%;" placeholder="费用" readonly="true" ms-duplex="send.yfPrice">
+            		<label>
+               			 元
+            		</label>
+        		</div>
     			<div class="ui-form-item ui-form-item-show ui-border-b">
             		<label>
                			 备注
