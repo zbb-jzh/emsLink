@@ -105,4 +105,12 @@ public abstract class BaseSend<M extends BaseSend<M>> extends Model<M> implement
 		return get("yfPrice");
 	}
 
+	public void setType(java.lang.Integer type) {
+		set("type", type);
+	}
+
+	public java.lang.Integer getType() {
+		return get("type");
+	}
+
 }

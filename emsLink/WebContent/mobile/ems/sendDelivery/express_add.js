@@ -4,7 +4,7 @@
 
 var vm = avalon.define({
 	$id:'expressadd',
-	send:{id:'',name:'', phone:'',townId:"",teamId:"",address:'', remark:"", yfPrice:''},
+	send:{id:'',name:'', phone:'',townId:"",teamId:"",address:'', remark:"", yfPrice:'',type:2},
 	address1:"",
 	address2:"",
 	address3:"",

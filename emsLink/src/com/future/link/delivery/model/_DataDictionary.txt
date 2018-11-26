@@ -14,5 +14,6 @@ Table: delivery_send
  wxUserId   | INT(10)      | YES  |     |         | 微信用户id  
  kdyId      | VARCHAR(50)  | YES  |     |         | 快递员id   
  yfPrice    | DOUBLE(22)   | YES  |     |         |         
+ type       | INT(10)      | YES  |     |         | 1,寄快递；2代送快递
 ------------+--------------+------+-----+---------+---------
 
