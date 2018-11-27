@@ -113,4 +113,12 @@ public abstract class BaseSend<M extends BaseSend<M>> extends Model<M> implement
 		return get("type");
 	}
 
+	public void setExpressName(java.lang.String expressName) {
+		set("expressName", expressName);
+	}
+
+	public java.lang.String getExpressName() {
+		return get("expressName");
+	}
+
 }

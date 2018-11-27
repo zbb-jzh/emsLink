@@ -21,6 +21,25 @@
 	
 		<div class="ui-form ui-border-t">
     		<!-- <form> -->
+    		<!-- <div class="ui-form-item ui-form-item-show ui-border-b"> -->
+    			<div class="ui-tooltips ui-tooltips-warn">
+    			<div class="ui-tooltips-cnt ui-border-b">
+        		<i></i>请选择对应的快递公司，几个快递就选几个快递公司！
+    		</div>
+			<!-- </div> -->
+				</div> 
+    			<div class="ui-form-item ui-form-item-show ui-border-b" id="express1">
+                        <label >快递公司</label>
+                        <div class="ui-select-group" style="overflow: unset;">
+                            <div class="ui-select" style="width: 50%;">
+                                <select ms-duplex="expressName" style="height: 100%;">
+                                    <option ms-repeat-item="expressList" ms-attr-value="{{item.name}}">{{item.name}}</option> 
+                                </select>
+                            </div>
+                       </div>
+                       <button class="ui-btn ui-btn-primary" style="float: right;" ms-click="addExpress()">添加</button>
+                </div>
+                <div ms-repeat-item="arr" ms-html="item"></div>
         		<div class="ui-form-item ui-form-item-show ui-border-b">
             		<label>
                			 姓名

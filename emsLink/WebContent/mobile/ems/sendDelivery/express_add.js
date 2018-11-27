@@ -4,7 +4,8 @@
 
 var vm = avalon.define({
 	$id:'expressadd',
-	send:{id:'',name:'', phone:'',townId:"",teamId:"",address:'', remark:"", yfPrice:'',type:2},
+	expressList:[{id:1,name:'圆通快递'},{id:2,name:'申通快递'},{id:3,name:'汇通快递'},{id:4,name:'中通快递'},{id:5,name:'韵达快递'},{id:6,name:'天天快递'}],
+	send:{id:'',name:'', phone:'',townId:"",teamId:"",address:'', remark:"", yfPrice:'',type:2,expressName:''},
 	address1:"",
 	address2:"",
 	address3:"",
@@ -12,6 +13,9 @@ var vm = avalon.define({
 	address1List:[],
 	submited:false,
 	isUpdate:false,
+	index:1,
+	arr: [],
+	expressName:'韵达快递',
 	getConsumer:function()
 	{
 		if(vm.consumerId)
@@ -129,6 +133,18 @@ var vm = avalon.define({
 		}
 		vm.send.townId = vm.address1;
 		vm.send.teamId = vm.address2;
+		if(vm.expressName == ''){
+			alert("快递公司不能为空！");
+			return false;
+		}
+		var slectedExpress = vm.expressName + "--";
+		
+		for(var i=2; i<=vm.index; i++){
+			if($("#selectExpress" + i + " option:selected").text()){
+				slectedExpress += $("#selectExpress" + i + " option:selected").text() + "--";
+			}
+		}
+		vm.send.expressName = slectedExpress;
 		if(vm.consumerId)
 		{
 			$.ajax({
@@ -170,6 +186,29 @@ var vm = avalon.define({
 			    }
 			});
 		}
+	},
+	addExpress:function(){
+		//++vm.index;
+		var num = vm.index;
+		var html = '<div class="ui-form-item ui-form-item-show ui-border-b" id="express'+ ++vm.index +'"><label >快递公司</label>'+
+        '<div class="ui-select-group" style="overflow: unset;">'
+				+'<div class="ui-select" style="width: 50%;">'+
+                '<select  style="height: 100%;" id="selectExpress'+ vm.index +'">';
+                for(var i=0; i<vm.expressList.length; i++){
+                	html += '<option ms-attr-value="'+ vm.expressList[i].id +'">'+ vm.expressList[i].name +'</option>'
+                }
+                 html +='</select></div></div><button class="ui-btn ui-btn-primary" style="float: right;" ms-click="deleteExpress('+ vm.index +')">删除</button></div>';
+		/*$("#express" + num).after(html);
+		setTimeout(function(){
+	        console.log("再次扫描")
+	        avalon.scan(document.body);
+	    },3000);*/
+                 vm.arr.push(html);
+	},
+	deleteExpress:function(index){
+		//--vm.index;
+		$("#express" + index).remove();
+		
 	},
 	pay:function(){
 		$.ajax({
