@@ -27,6 +27,47 @@ public class DeliveryController extends Controller{
 	}
 	
 	/**
+	 * 查询用户快递订单
+	 */
+	public void doSearchWxUserOrder() {
+		
+		//类型，1是邮寄，2是代送
+		int type = this.getParaToInt("type");
+		//状态 1未支付，2，微信支付，3券支付
+		int status = this.getParaToInt("status");
+		
+		WxUser user=(WxUser) this.getRequest().getSession().getAttribute("wxuser");
+		
+		renderJson(SendDeliveryService.service.searchWxUserOrder(type, status, user));
+	}
+	
+	/**
+	 * 查询用户快递订单
+	 */
+	public void doPage() {
+		
+		//类型，1是邮寄，2是代送
+		int type = this.getParaToInt("type");
+		//状态 1未支付，2，微信支付，3券支付
+		int status = this.getParaToInt("status");
+		
+		int pageNo = this.getParaToInt("pageNo");
+		
+		int pageSize = this.getParaToInt("pageSize");
+		
+		WxUser user=(WxUser) this.getRequest().getSession().getAttribute("wxuser");
+		
+		renderJson(SendDeliveryService.service.page(pageNo,pageSize,type, status, user));
+	}
+	
+	/**
+	 * 取消订单
+	 */
+	public void doCancleOrder() {
+		int id = this.getParaToInt("id");
+		renderJson(SendDeliveryService.service.cancleOrder(id));
+	}
+	/**
 	 * 获取镇
 	 */
 	public void doGetParent()

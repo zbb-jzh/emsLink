@@ -121,4 +121,20 @@ public abstract class BaseSend<M extends BaseSend<M>> extends Model<M> implement
 		return get("expressName");
 	}
 
+	public void setKdyName(java.lang.String kdyName) {
+		set("kdyName", kdyName);
+	}
+
+	public java.lang.String getKdyName() {
+		return get("kdyName");
+	}
+
+	public void setKdyPhone(java.lang.String kdyPhone) {
+		set("kdyPhone", kdyPhone);
+	}
+
+	public java.lang.String getKdyPhone() {
+		return get("kdyPhone");
+	}
+
 }

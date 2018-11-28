@@ -8,7 +8,7 @@ Table: delivery_send
  address     | VARCHAR(500) | NO   |     |         | 地址      
  remark      | VARCHAR(200) | YES  |     |         |         
  createTime  | DATETIME(19) | NO   |     |         |         
- status      | INT(10)      | NO   |     | 1       | 状态，0删除，1未支付，2，微信支付，3券支付
+ status      | INT(10)      | NO   |     | 1       | 状态，0删除，1未支付，2，微信支付，3券支付,4已完成
  townId      | BIGINT(19)   | YES  |     |         | 镇id     
  teamId      | BIGINT(19)   | YES  |     |         | 大队      
  wxUserId    | INT(10)      | YES  |     |         | 微信用户id  
@@ -16,5 +16,7 @@ Table: delivery_send
  yfPrice     | DOUBLE(22)   | YES  |     |         |         
  type        | INT(10)      | YES  |     |         | 1,寄快递；2代送快递
  expressName | VARCHAR(500) | YES  |     |         | 快递名称    
+ kdyName     | VARCHAR(100) | YES  |     |         | 快递员姓名   
+ kdyPhone    | VARCHAR(50)  | YES  |     |         | 快递员电话   
 -------------+--------------+------+-----+---------+---------
 
