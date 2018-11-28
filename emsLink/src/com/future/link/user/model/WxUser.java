@@ -8,4 +8,17 @@ import com.future.link.user.model.base.BaseWxUser;
 @SuppressWarnings("serial")
 public class WxUser extends BaseWxUser<WxUser> {
 	public static final WxUser dao = new WxUser();
+	
+	private int unusedNum;
+
+	public int getUnusedNum() {
+		return unusedNum;
+	}
+
+	public void setUnusedNum(int unusedNum) {
+		this.unusedNum = unusedNum;
+		this.put("unusedNum", unusedNum);
+	}
+	
+	
 }

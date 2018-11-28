@@ -3,9 +3,9 @@
  */
 
 var vm = avalon.define({
-	$id:'expressadd',
+	$id:'mailingadd',
 	expressList:[{id:1,name:'圆通快递'},{id:2,name:'申通快递'},{id:3,name:'汇通快递'},{id:4,name:'中通快递'},{id:5,name:'韵达快递'},{id:6,name:'天天快递'}],
-	send:{id:'',name:'', phone:'',townId:"",teamId:"",address:'', remark:"", yfPrice:'',type:2,expressName:''},
+	send:{id:'',name:'', phone:'',townId:"",teamId:"",address:'', remark:"", yfPrice:'',type:1,expressName:'',mailingAddress:""},
 	address1:"",
 	address2:"",
 	address3:"",
@@ -137,14 +137,7 @@ var vm = avalon.define({
 			alert("快递公司不能为空！");
 			return false;
 		}
-		var slectedExpress = vm.expressName + "--";
 		
-		for(var i=2; i<=vm.index; i++){
-			if($("#selectExpress" + i + " option:selected").text()){
-				slectedExpress += $("#selectExpress" + i + " option:selected").text() + "--";
-			}
-		}
-		vm.send.expressName = slectedExpress;
 		if(vm.consumerId)
 		{
 			$.ajax({
@@ -155,7 +148,7 @@ var vm = avalon.define({
 			    success: function(res) {
 			    	if (res.status == 1) {
 			    		console.log('sucess');
-			    		alert("注册成功");
+			    		alert("添加成功");
 			    		//vm.goback();
 	                }else{
 	                	alert(res.data);

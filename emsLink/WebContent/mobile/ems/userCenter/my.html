@@ -3,7 +3,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
         <meta name="format-detection" content="telephone=no">
-        <title>代送订单</title>
+        <title>会员中心</title>
 		<link rel="stylesheet" href="../../frozen/css/frozen.css">
         <link rel="stylesheet" href="../../demo.css">
         <link rel="stylesheet" href="../../common/jQuery-ztree/demo.css">
@@ -36,17 +36,17 @@
             </figure>
             <div class="masthead-caption">
                 <h3 class="masthead-caption-title line-ellipsis" >
-                155279XCLjBiR{{background}}
+                155279XCLjBiR{{wxuser.nickName}}
                                 </h3>
 
                 <p class="masthead-wallet" data-space="&nbsp;" id="underName"></p>
 
-                <p class="masthead-setting"><a href="javascript:void(0)/member/person/" tjjj="wap.member.person">账户设置<i class="icon icon-right"></i></a></p>
+                <!-- <p class="masthead-setting"><a href="javascript:void(0)/member/person/" tjjj="wap.member.person">账户设置<i class="icon icon-right"></i></a></p> -->
             </div>
         </div>
     </section>
-
-    <section class="masthead-footerSection normal-layer no-padding-layer i-border-image">
+    
+    <!-- <section class="masthead-footerSection normal-layer no-padding-layer i-border-image">
         <div class="clearfix">
             <a class="item" href="javascript:void(0)/i/message/type/" tjjj="wap.user.login.message">
                 <div class="sl-item">
@@ -66,9 +66,9 @@
                 </div>
             </a>
         </div>
-    </section>
+    </section> -->
 
-    <section class="service-section normal-layer no-padding-layer i-border-image">
+    <!-- <section class="service-section normal-layer no-padding-layer i-border-image">
         <ul class="feature-list interaction-list">
             <li class="feature-item">
                 <a href="javascript:void(0)/member/myorder/" tjjj="wap.member.myorder" id="isRetailOrder">
@@ -118,9 +118,9 @@
                 </a>
             </li>
         </ul>
-    </section>
+    </section> -->
 
-    <section class="advance-section normal-layer no-padding-layer no-border-layer">
+    <!-- <section class="advance-section normal-layer no-padding-layer no-border-layer">
         <div class="advance-slider" id="advanceSlider">
             <div class="swiper-wrapper clearfix">
                 <ul class="swiper-slide advance-list clearfix">
@@ -275,9 +275,30 @@
             </div>
         </div>
         <div class="slider-pagination i-border-image"></div>
-    </section>
+    </section> -->
 
 	</main>
+<ul class="ui-list ui-list-single ui-list-link ui-border-tb">
+    <li class="ui-border-t" ms-click="toSend()">
+        <div class="ui-list-info">
+            <h4 class="ui-nowrap">代送快递订单</h4>
+            <!-- <div class="ui-txt-info">男</div> -->
+        </div>
+    </li>
+    <li class="ui-border-t" ms-click="toMailing()">
+        <div class="ui-list-info">
+            <h4 class="ui-nowrap">邮寄快递订单</h4>
+            <!-- <div class="ui-reddot ui-reddot-static"></div> -->
+        </div>
+    </li>
+    <li class="ui-border-t">
+        <div class="ui-list-info">
+            <h4 class="ui-nowrap">代金券<label style="float: right;">剩余{{wxuser.unusedNum}}张</label></h4>
+            <!-- <div class="ui-txt-info">男</div> -->
+            
+        </div>
+    </li>
+</ul>
 
 	</body>
 

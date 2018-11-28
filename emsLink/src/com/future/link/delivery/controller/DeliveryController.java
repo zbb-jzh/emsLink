@@ -2,6 +2,7 @@ package com.future.link.delivery.controller;
 
 import com.future.link.common.Result;
 import com.future.link.delivery.model.Send;
+import com.future.link.delivery.service.CouponService;
 import com.future.link.delivery.service.SendDeliveryService;
 import com.future.link.goods.service.CategoryService;
 import com.future.link.user.model.User;
@@ -97,7 +98,7 @@ public class DeliveryController extends Controller{
 	 */
 	public void getWxUser() {
 		WxUser user=(WxUser) this.getRequest().getSession().getAttribute("wxuser");
-		
+		user.setUnusedNum(CouponService.service.countUnusedCoupon(user.getId()));
 		renderJson(new Result(Constant.SUCCESS, user));
 	}
 

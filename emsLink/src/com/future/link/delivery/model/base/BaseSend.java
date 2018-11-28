@@ -137,4 +137,12 @@ public abstract class BaseSend<M extends BaseSend<M>> extends Model<M> implement
 		return get("kdyPhone");
 	}
 
+	public void setMailingAddress(java.lang.String mailingAddress) {
+		set("mailingAddress", mailingAddress);
+	}
+
+	public java.lang.String getMailingAddress() {
+		return get("mailingAddress");
+	}
+
 }

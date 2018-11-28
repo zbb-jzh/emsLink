@@ -4,11 +4,11 @@
 
 var vm = avalon.define({
 	$id:'mycenter',
-	wxuser:{nickName:'', headimgUrl:'http://thirdwx.qlogo.cn/mmopen/vi_32/nUYFrDawI8YRpu5FhJfh98bAsicxbrTe8MZ0bCYYdDW1I86cMjILaibGBNFXvVrlRsXTtJB1ezd3lPfD6969kdDw/132'},
+	wxuser:{unusedNum:0,nickName:'', headimgUrl:'http://thirdwx.qlogo.cn/mmopen/vi_32/nUYFrDawI8YRpu5FhJfh98bAsicxbrTe8MZ0bCYYdDW1I86cMjILaibGBNFXvVrlRsXTtJB1ezd3lPfD6969kdDw/132'},
 	headimgUrl:'http://thirdwx.qlogo.cn/mmopen/vi_32/nUYFrDawI8YRpu5FhJfh98bAsicxbrTe8MZ0bCYYdDW1I86cMjILaibGBNFXvVrlRsXTtJB1ezd3lPfD6969kdDw/132',
 	submited:false,
 	isUpdate:false,
-	background:'red',
+	yhqNum:0,
 	
 	getWxUser:function(){
 		$.ajax({
@@ -31,9 +31,12 @@ var vm = avalon.define({
 		    }
 		});
 	},
-    removeInput:function(name){
-    	vm.consumer[name] = '';
-    },
+	toSend:function(){
+		window.location.href = 'mysends.html';
+	},
+	toMailing:function(){
+		window.location.href = 'mymailings.html';
+	},
 	goback:function()
 	{
 		window.location.href = '#/consumer/list';
