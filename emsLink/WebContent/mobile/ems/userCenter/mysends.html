@@ -29,10 +29,11 @@
         <!-- <p class="demo-desc">3TAB</p> -->
         <div class="demo-block">
             <div class="ui-tab">
-                <ul class="ui-tab-nav ui-border-b" style="font-size: 17.5px;position:fixed;top:0px;z-index: 1000;">
-                  <li class="current" ms-click="getOrderList(1)"><span>未支付</span></li>
-                  <li ms-click="getOrderList(2)"><span>已支付</span></li>
-                  <li ms-click="getOrderList(4)"><span>已完成</span></li>
+                <ul class="ui-tab-nav ui-border-b" style="font-size: 17.5;position:fixed;top:0px;z-index: 1000;">
+                  <li class="current" ms-click="getOrderList(1)" style="font-size: 15px;"><span>未支付</span></li>
+                  <li ms-click="getOrderList(2)" style="font-size: 15px;"><span>已支付</span></li>
+                  <li ms-click="getOrderList(4)" style="font-size: 15px;"><span>已完成</span></li>
+                  <li ms-click="getOrderList(0)" style="font-size: 15px;"><span>已取消</span></li>
                 </ul>
                  <!-- <ul class="ui-tab-content" style="width:300%">
                     <li>内容1</li>
@@ -51,14 +52,14 @@
             	<p>地址：{{item.address}}</p>
             	<p>支付费用：{{item.yfPrice}}</p>
             	<p>提交时间：{{item.createTime}}</p>
-            	<p>快递员：{{item.kdyName}}</p>
-            	<p>快递员联系电话：{{item.kdyPhone}}</p>
+            	<p ms-if="item.status != 0">快递员：{{item.kdyName}}</p>
+            	<p ms-if="item.status != 0">快递员联系电话：{{item.kdyPhone}}</p>
             	<p ms-if="item.status==0">支付状态：<span style="color:red;">已取消</span></p>
             	<p ms-if="item.status==1">支付状态：<span style="color:red;">未支付</span></p>
             	<p ms-if="item.status==2">支付状态：<span style="color:red;">微信支付</span></p>
             	<p ms-if="item.status==3">支付状态：<span style="color:red;">优惠券支付</span></p>
             	<p ms-if="item.status==4">支付状态：<span style="color:red;">已完成</span></p>
-            	<p><button ms-if="item.status == 1"  class="ui-btn ui-btn-primary"  ms-click="cancleOrder(item.id)">取消</button></p>
+            	<p><button ms-if="item.status == 1"  class="ui-btn" style="float:right;margin-top: -35px;background-color: #18b4ed;"  ms-click="cancleOrder(item.id)">取消</button></p>
         		</div>
     			</li>
 			</ul>

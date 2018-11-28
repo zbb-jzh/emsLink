@@ -91,5 +91,14 @@ public class DeliveryController extends Controller{
 	{
 		renderJson(CategoryService.service.tree());
 	}
+	
+	/**
+	 * 获取微信用户信息
+	 */
+	public void getWxUser() {
+		WxUser user=(WxUser) this.getRequest().getSession().getAttribute("wxuser");
+		
+		renderJson(new Result(Constant.SUCCESS, user));
+	}
 
 }

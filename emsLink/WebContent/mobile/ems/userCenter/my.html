@@ -15,15 +15,17 @@
         <script type="text/javascript" src="../../common/jQuery-ztree/jquery.ztree.core.min.js" > </script>
 		<script type="text/javascript" src="../../common/jQuery-ztree/jquery.ztree.all.min.js" > </script>
 		<script type="text/javascript" src="../../common/tools.js" > </script>
-        <script src="my.js"></script>
-        
 		<script type="text/javascript" src="data/js/autoFize.js?version=20160920-173444"></script>
 		<link type="text/css" rel="stylesheet" href="data/css/head.css?version=20160920-173444"/>
 		<link type="text/css" rel="stylesheet" href="data/css/styles.min.css?version=20160920-173444"/>
+		<script type="text/javascript" src="data/js/commonNav.js"></script>
+        <script src="my.js"></script>
+        
+		
         
     </head>
-	<body ms-controller="my">
-	<script type="text/javascript" src="data/js/commonNav.js"></script>
+	<body ms-controller="mycenter">
+	
 		<main class="jumbotron-main">
     <section class="masthead-section no-padding-layer no-border-layer">
         <input type="hidden" value="0" id="fromzdh"/>
@@ -33,8 +35,8 @@
             
             </figure>
             <div class="masthead-caption">
-                <h3 class="masthead-caption-title line-ellipsis">
-                155279XCLjBiR
+                <h3 class="masthead-caption-title line-ellipsis" ms-css="{background:background}">
+                155279XCLjBiR{{background}}
                                 </h3>
 
                 <p class="masthead-wallet" data-space="&nbsp;" id="underName"></p>
@@ -275,7 +277,7 @@
         <div class="slider-pagination i-border-image"></div>
     </section>
 
-</main>
+	</main>
 
 	</body>
 
