@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSONObject;
+import com.jfinal.kit.Prop;
+import com.jfinal.kit.PropKit;
+
 public class WXUtils {
 	
 	/**
@@ -101,6 +105,18 @@ public class WXUtils {
         result = MD5Util.MD5Encode(result, characterEncoding).toUpperCase();  
         //Util.log("Sign Result:" + result);  
         return result;  
-    }  
+    }
+    
+    /**
+     * 获取token
+     * @return
+     */
+    public static String getToken() {
+    	Prop prop = PropKit.use("WxConfig.properties");
+    	String getTokenUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+ prop.get("appid") +"&secret="+ prop.get("appsecret");
+    	String json = HttpsGetUtil.doHttpsGetJson(getTokenUrl);
+        JSONObject jsonObject = JSONObject.parseObject(json);
+        return jsonObject.getString("access_token");
+    }
 
 }

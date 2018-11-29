@@ -8,6 +8,7 @@ import com.future.link.user.model.WxUser;
 import com.future.link.utils.ToolDateTime;
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Enhancer;
+import com.jfinal.kit.StrKit;
 import com.jfinal.plugin.activerecord.tx.Tx;
 
 public class WXService {
@@ -20,14 +21,34 @@ public class WXService {
 		
 		WxUser model = WxUser.dao.findFirst("select * from user_wx_user where openId = ? ", user.getOpenId());
         if(null != model){
-        	model.setCity(user.getCity());
-        	model.setCountry(user.getCountry());
-        	model.setHeadimgUrl(user.getHeadimgUrl());
-        	model.setNickName(URLEncoder.encode(user.getNickName(), "utf-8"));
+        	if(StrKit.notBlank(user.getCity())) {
+        		model.setCity(user.getCity());
+        	}
         	
-        	model.setPrivilege(user.getPrivilege());
-        	model.setProvince(user.getProvince());
-        	model.setSex(user.getSex());
+        	if(StrKit.notBlank(user.getCountry())) {
+        		model.setCountry(user.getCountry());
+        	}
+        	
+        	if(StrKit.notBlank(user.getHeadimgUrl())) {
+        		model.setHeadimgUrl(user.getHeadimgUrl());
+        	}
+        	
+        	if(StrKit.notBlank(user.getNickName())) {
+        		model.setNickName(URLEncoder.encode(user.getNickName(), "utf-8"));
+        	}
+        	
+        	if(StrKit.notBlank(user.getPrivilege())) {
+        		model.setPrivilege(user.getPrivilege());
+        	}
+        	
+        	if(StrKit.notBlank(user.getProvince())) {
+        		model.setProvince(user.getProvince());
+        	}
+        	
+        	if(StrKit.notBlank(user.getSex())) {
+        		model.setSex(user.getSex());
+        	}
+        	
         	model.update();
         }else {
         	

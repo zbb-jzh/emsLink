@@ -54,11 +54,10 @@
             	<p>提交时间：{{item.createTime}}</p>
             	<p ms-if="item.status != 0">快递员：{{item.kdyName}}</p>
             	<p ms-if="item.status != 0">快递员联系电话：{{item.kdyPhone}}</p>
-            	<p ms-if="item.status==0">支付状态：<span style="color:red;">已取消</span></p>
-            	<p ms-if="item.status==1">支付状态：<span style="color:red;">未支付</span></p>
-            	<p ms-if="item.status==2">支付状态：<span style="color:red;">微信支付</span></p>
-            	<p ms-if="item.status==3">支付状态：<span style="color:red;">优惠券支付</span></p>
-            	<p ms-if="item.status==4">支付状态：<span style="color:red;">已完成</span></p>
+            	<p ms-if="item.status==0">状态：<span style="color:red;">已取消</span></p>
+            	<p ms-if="item.status==7">状态：<span style="color:red;">未收件</span></p>
+            	<p ms-if="item.status==5">状态：<span style="color:red;">已收件</span></p>
+            	<p ms-if="item.status==6">状态：<span style="color:red;">已邮寄</span></p>
             	<p><button ms-if="item.status == 1"  class="ui-btn" style="float:right;margin-top: -35px;background-color: #18b4ed;"  ms-click="cancleOrder(item.id)">取消</button></p>
         		</div>
     			</li>

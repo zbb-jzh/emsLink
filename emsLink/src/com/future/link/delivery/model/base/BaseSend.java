@@ -145,4 +145,12 @@ public abstract class BaseSend<M extends BaseSend<M>> extends Model<M> implement
 		return get("mailingAddress");
 	}
 
+	public void setPayStatus(java.lang.Integer payStatus) {
+		set("payStatus", payStatus);
+	}
+
+	public java.lang.Integer getPayStatus() {
+		return get("payStatus");
+	}
+
 }

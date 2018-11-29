@@ -66,6 +66,18 @@ public class SendDeliveryService {
 	}
 	
 	/**
+	 * 快递员确认送达快递
+	 * @param id
+	 * @return
+	 */
+	public Result confirmSendOrder(int id) {
+		
+		Db.update("update delivery_send set status = 2 where id = ?", id);
+		
+		return new Result(Result.SUCCESS_STATUS, "成功送达");
+	}
+	
+	/**
 	 * 微信回调成功，修改订单状态
 	 */
 	public void conformOrder(int id) {
@@ -82,11 +94,28 @@ public class SendDeliveryService {
 	 */
 	public Result searchWxUserOrder(int type, int status, WxUser user) {
 		List<Send> list;
-		if(status == 2) {
-			list = Send.dao.find("select * from delivery_send where status = 2 or status = 3 and type = ? ", type);
+		if(status == 3) {
+			list = Send.dao.find("select * from delivery_send where payStatus = 2 or payStatus = 3 and type = ? ", type);
+		}else if(status == 1) {
+			list = Send.dao.find("select * from delivery_send where type = ? and payStatus = ? ", type, status);
 		}else {
 			list = Send.dao.find("select * from delivery_send where type = ? and status = ? ", type, status);
 		}
+		
+		return new Result(Result.SUCCESS_STATUS, list);
+	}
+	
+	/**
+	 * 查询快递员订单
+	 * @param type
+	 * @param status
+	 * @param user  and kdyId = ?  , user.getId()
+	 * @return
+	 */
+	public Result searchCourierOrder(int type, int status, Consumer user) {
+		List<Send> list;
+		
+		list = Send.dao.find("select * from delivery_send where type = ? and status = ? ", type, status);
 		
 		return new Result(Result.SUCCESS_STATUS, list);
 	}

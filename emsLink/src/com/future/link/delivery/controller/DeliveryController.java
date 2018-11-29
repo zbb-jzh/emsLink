@@ -1,6 +1,7 @@
 package com.future.link.delivery.controller;
 
 import com.future.link.common.Result;
+import com.future.link.consumer.model.Consumer;
 import com.future.link.delivery.model.Send;
 import com.future.link.delivery.service.CouponService;
 import com.future.link.delivery.service.SendDeliveryService;
@@ -39,6 +40,29 @@ public class DeliveryController extends Controller{
 		WxUser user=(WxUser) this.getRequest().getSession().getAttribute("wxuser");
 		
 		renderJson(SendDeliveryService.service.searchWxUserOrder(type, status, user));
+	}
+	
+	/**
+	 * 查询快递员，代送快递
+	 */
+	public void doSearchCourierOrder() {
+		
+		//类型，1是邮寄，2是代送
+		int type = this.getParaToInt("type");
+		//状态 1未支付，2，微信支付，3券支付
+		int status = this.getParaToInt("status");
+				
+		Consumer user=(Consumer) this.getRequest().getSession().getAttribute("courierwxuser");
+				
+		renderJson(SendDeliveryService.service.searchCourierOrder(type, status, user));
+	}
+	
+	/**
+	 * 快递员确认送达
+	 */
+	public void doConfirmSendOrder() {
+		int id = this.getParaToInt("id");
+		renderJson(SendDeliveryService.service.confirmSendOrder(id));
 	}
 	
 	/**

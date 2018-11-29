@@ -3,7 +3,6 @@ package com.future.link.utils;
 import java.util.Date;
 
 import com.future.link.wx.model.TextMessage;
-import com.sun.xml.internal.ws.util.xml.XmlUtil;
 
 /*
  * ��Ϣ��������
@@ -41,5 +40,21 @@ public class MessageUtil {
 		//TODO ���Խ���ȡ�غ����������ҵ����
 		System.out.println("欢迎"+ fromUserName +"下次光临");
 		return "";
+	}
+	
+	/**
+	 * 发送模板信息
+	 */
+	public static void pushTemplateMessage(String content) {
+		
+		String token = WXUtils.getToken();
+		
+		//设置url
+        String pushMessageUrl = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + token;
+        
+        //String json = "{\"template_id\":\""+templateId+"\",\"touser\":\""+openId+"\",\"data\":{\"result\":{\"value\":\"关注成功\",\"color\":\"#173177\"}}}";
+       
+        String result = HttpsGetUtil.postData(pushMessageUrl, content , "utf-8");
+        
 	}
 }

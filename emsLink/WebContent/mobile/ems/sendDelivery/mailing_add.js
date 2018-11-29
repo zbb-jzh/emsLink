@@ -133,10 +133,6 @@ var vm = avalon.define({
 		}
 		vm.send.townId = vm.address1;
 		vm.send.teamId = vm.address2;
-		if(vm.expressName == ''){
-			alert("快递公司不能为空！");
-			return false;
-		}
 		
 		if(vm.consumerId)
 		{

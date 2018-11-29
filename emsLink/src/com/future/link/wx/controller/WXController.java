@@ -86,6 +86,8 @@ public class WXController extends Controller {
     			if(MessageUtil.MSGTYPE_EVENT.equals(msgType)){//如果为事件类型
     				if(MessageUtil.MESSAGE_SUBSCIBE.equals(eventType)){//处理订阅事件
     					message = MessageUtil.subscribeForText(toUserName, fromUserName);
+    					String json = "{\"template_id\":\"5-DADbr1h5lAxclKN0qheN_zi3nAyIEeeKD7gdpd3ow\",\"touser\":\""+fromUserName+"\",\"data\":{\"result\":{\"value\":\"关注成功\",\"color\":\"#173177\"}}}";
+    					MessageUtil.pushTemplateMessage(json);
     					WxUser user = new WxUser();
     					user.setOpenId(fromUserName);
     					WXService.service.addWXUser(user);
@@ -132,7 +134,7 @@ public class WXController extends Controller {
 	 */
     public void auth()throws ServletException, IOException {
     	
-    	Prop prop = PropKit.use("wxconfig.properties");
+    	Prop prop = PropKit.use("WxConfig.properties");
 
             //拼接
             String get_access_token_url = "https://api.weixin.qq.com/sns/oauth2/access_token?"

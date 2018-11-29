@@ -30,9 +30,9 @@
         <div class="demo-block">
             <div class="ui-tab">
                 <ul class="ui-tab-nav ui-border-b" style="font-size: 17.5;position:fixed;top:0px;z-index: 1000;">
-                  <li class="current" ms-click="getOrderList(1)" style="font-size: 15px;"><span>未支付</span></li>
-                  <li ms-click="getOrderList(3)" style="font-size: 15px;"><span>已支付</span></li>
-                  <li ms-click="getOrderList(2)" style="font-size: 15px;"><span>已完成</span></li>
+                  <li class="current" ms-click="getOrderList(1)" style="font-size: 15px;"><span>未送</span></li>
+                  <!-- <li ms-click="getOrderList(2)" style="font-size: 15px;"><span>已支付</span></li> -->
+                  <li ms-click="getOrderList(2)" style="font-size: 15px;"><span>已送</span></li>
                   <li ms-click="getOrderList(0)" style="font-size: 15px;"><span>已取消</span></li>
                 </ul>
                  <!-- <ul class="ui-tab-content" style="width:300%">
@@ -59,7 +59,8 @@
             	<p ms-if="item.payStatus==2">支付状态：<span style="color:red;">微信支付</span></p>
             	<p ms-if="item.payStatus==3">支付状态：<span style="color:red;">优惠券支付</span></p>
             	<p ms-if="item.status==2">状态：<span style="color:red;">已完成</span></p>
-            	<p><button ms-if="item.payStatus == 1"  class="ui-btn" style="float:right;margin-top: -35px;background-color: #18b4ed;"  ms-click="cancleOrder(item.id)">取消</button></p>
+            	<p><button ms-if="item.payStatus == 1"  class="ui-btn" style="float:right;margin-top: -35px;background-color: #18b4ed;"  ms-click="confirmOrder(item.id)">送达并收款</button></p>
+        		<p><button ms-if="item.payStatus == 2 || item.payStatus == 3"  class="ui-btn" style="float:right;margin-top: -35px;background-color: #18b4ed;"  ms-click="confirmOrder(item.id)">确认送达</button></p>
         		</div>
     			</li>
 			</ul>

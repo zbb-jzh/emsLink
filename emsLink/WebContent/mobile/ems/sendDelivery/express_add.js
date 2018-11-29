@@ -5,7 +5,7 @@
 var vm = avalon.define({
 	$id:'expressadd',
 	expressList:[{id:1,name:'圆通快递'},{id:2,name:'申通快递'},{id:3,name:'汇通快递'},{id:4,name:'中通快递'},{id:5,name:'韵达快递'},{id:6,name:'天天快递'}],
-	send:{id:'',name:'', phone:'',townId:"",teamId:"",address:'', remark:"", yfPrice:'',type:2,expressName:'',status:0},
+	send:{id:'',name:'', phone:'',townId:"",teamId:"",address:'', remark:"", yfPrice:'',type:2,expressName:'',status:1,payStatus:1},
 	wxuser:{unusedNum:0,nickName:'', headimgUrl:''},
 	address1:"",
 	address2:"",
@@ -168,7 +168,7 @@ var vm = avalon.define({
 		}
 		vm.send.expressName = slectedExpress;
 		
-		vm.send.status = status;
+		vm.send.payStatus = status;
 		
 		if(vm.consumerId)
 		{
