@@ -72,7 +72,23 @@ public class SendDeliveryService {
 	 */
 	public Result confirmSendOrder(int id) {
 		
-		Db.update("update delivery_send set status = 2 where id = ?", id);
+		Db.update("update delivery_send set status = 2, payStatus = 1 where id = ?", id);
+		
+		return new Result(Result.SUCCESS_STATUS, "成功送达");
+	}
+	
+	/**
+	 * 快递员确认shoujian
+	 * @param id
+	 * @return
+	 */
+	public Result confirmMailingOrder(int id, int status, String expressName, String expressNo) {
+		
+		if(status == 5) {
+			Db.update("update delivery_send set status = ? where id = ?", status, id);
+		}else {
+			Db.update("update delivery_send set status = ? , expressName = ?, expressNo = ? where id = ?", status,expressName, expressNo, id);
+		}
 		
 		return new Result(Result.SUCCESS_STATUS, "成功送达");
 	}
@@ -97,7 +113,7 @@ public class SendDeliveryService {
 		if(status == 3) {
 			list = Send.dao.find("select * from delivery_send where payStatus = 2 or payStatus = 3 and type = ? ", type);
 		}else if(status == 1) {
-			list = Send.dao.find("select * from delivery_send where type = ? and payStatus = ? ", type, status);
+			list = Send.dao.find("select * from delivery_send where type = ? and payStatus = 0 ", type);
 		}else {
 			list = Send.dao.find("select * from delivery_send where type = ? and status = ? ", type, status);
 		}

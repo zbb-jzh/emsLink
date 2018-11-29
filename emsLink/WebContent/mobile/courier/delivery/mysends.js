@@ -7,7 +7,7 @@ var vm = avalon.define({
 	orderList:[],
 	submited:false,
 	isUpdate:false,
-	
+	id:"",
 	getOrderList:function(status){
 		$.ajax({
 		    url: "../../../delivery/doSearchCourierOrder",    //请求的url地址
@@ -29,16 +29,25 @@ var vm = avalon.define({
 		    }
 		});
 	},
-	confirmOrder:function(id){
+	showDialog:function(id){
+		vm.id = id;
+		$("#conformPay").addClass("show");
+	},
+	hideDialog:function(){
+		$("#conformPay").removeClass("show");
+	},
+	confirmOrder:function(){
+		
 		$.ajax({
 		    url: "../../../delivery/doConfirmSendOrder",    //请求的url地址
 		    dataType: "json",   //返回格式为json
-		    data: {id:id},    //参数值
+		    data: {id:vm.id},    //参数值
 		    type: "post",   //请求方式
 		    success: function(res) {
 		    	if (res.status == 1) {
 		    		console.log('sucess');
 		    		alert("成功送达");
+		    		$("#conformPay").removeClass("show");
 		    		vm.getOrderList(1);
 		    		//window.location.href = "consumer_node.html";
 		    		//vm.goback();

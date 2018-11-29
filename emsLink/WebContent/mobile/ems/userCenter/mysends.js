@@ -59,5 +59,5 @@ var vm = avalon.define({
 		window.location.href = '#/consumer/list';
 	}
 });
-vm.getOrderList(1);
+vm.getOrderList(0);
 avalon.scan();

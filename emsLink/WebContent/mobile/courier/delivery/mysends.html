@@ -55,12 +55,13 @@
             	<p ms-if="item.status != 0">快递员：{{item.kdyName}}</p>
             	<p ms-if="item.status != 0">快递员联系电话：{{item.kdyPhone}}</p>
             	<p ms-if="item.status==0">支付状态：<span style="color:red;">已取消</span></p>
-            	<p ms-if="item.payStatus==1">支付状态：<span style="color:red;">未支付</span></p>
+            	<p ms-if="item.payStatus==0">支付状态：<span style="color:red;">未支付</span></p>
+            	<p ms-if="item.payStatus==1">支付状态：<span style="color:red;">货到付款</span></p>
             	<p ms-if="item.payStatus==2">支付状态：<span style="color:red;">微信支付</span></p>
             	<p ms-if="item.payStatus==3">支付状态：<span style="color:red;">优惠券支付</span></p>
             	<p ms-if="item.status==2">状态：<span style="color:red;">已完成</span></p>
-            	<p><button ms-if="item.payStatus == 1"  class="ui-btn" style="float:right;margin-top: -35px;background-color: #18b4ed;"  ms-click="confirmOrder(item.id)">送达并收款</button></p>
-        		<p><button ms-if="item.payStatus == 2 || item.payStatus == 3"  class="ui-btn" style="float:right;margin-top: -35px;background-color: #18b4ed;"  ms-click="confirmOrder(item.id)">确认送达</button></p>
+            	<p><button ms-if="item.payStatus == 0 && item.status == 1"  class="ui-btn" style="float:right;margin-top: -35px;background-color: #18b4ed;"  ms-click="showDialog(item.id)">送达并收款</button></p>
+        		<p><button ms-if="(item.payStatus == 2 || item.payStatus == 3) && item.status == 1"  class="ui-btn" style="float:right;margin-top: -35px;background-color: #18b4ed;"  ms-click="confirmOrder(item.id)">确认送达</button></p>
         		</div>
     			</li>
 			</ul>
@@ -71,6 +72,19 @@
 	</section>
 
     </section>
+    
+    <div class="ui-dialog" id="conformPay">
+			    <div class="ui-dialog-cnt">
+			        <div class="ui-dialog-bd">
+			            <h3>提示</h3>
+			            <p>确定收款以及本人收获？</p>
+			        </div>
+			        <div class="ui-dialog-ft">
+			            <button type="button" data-role="button" ms-click="hideDialog()">取消</button>
+			            <button type="button" data-role="button" class="btn-recommand" ms-click="confirmOrder()">确定</button>
+			        </div>
+			    </div>
+			</div>
 
     <script src="http://open.mobile.qq.com/sdk/qqapi.js?_bid=152"></script>
     <script>

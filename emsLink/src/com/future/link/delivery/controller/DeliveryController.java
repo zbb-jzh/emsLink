@@ -66,6 +66,17 @@ public class DeliveryController extends Controller{
 	}
 	
 	/**
+	 * 快递员确认送达
+	 */
+	public void doConfirmMailingOrder() {
+		int id = this.getParaToInt("id");
+		int status = this.getParaToInt("status");
+		String expressName = this.getPara("expressName");
+		String expressNo = this.getPara("expressNo");
+		renderJson(SendDeliveryService.service.confirmMailingOrder(id, status, expressName, expressNo));
+	}
+	
+	/**
 	 * 查询用户快递订单
 	 */
 	public void doPage() {
