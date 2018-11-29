@@ -3,7 +3,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
         <meta name="format-detection" content="telephone=no">
-        <title>代送订单</title>
+        <title>邮寄订单</title>
 		<link rel="stylesheet" href="../../frozen/css/frozen.css">
         <link rel="stylesheet" href="../../demo.css">
         <link rel="stylesheet" href="../../common/jQuery-ztree/demo.css">
@@ -46,7 +46,7 @@
             	<span style="background-image:url(http://placeholder.qiniudn.com/80x80)"></span>
         	</div> -->
         		<div class="ui-list-info ui-border-t" id="expressData">
-        		<p>快递公司：{{item.expressName}}</p>
+        		<p ms-if="item.status == 6">快递公司：{{item.expressName}}</p>
             	<p>姓名：{{item.name}}</p>
             	<p>电话：{{item.phone}}</p>
             	<p>地址：{{item.address}}</p>
