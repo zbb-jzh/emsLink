@@ -3,11 +3,10 @@ package com.future.link.wx.controller;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -15,16 +14,19 @@ import java.util.TreeMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
+import org.dom4j.DocumentException;
+
 import com.alibaba.fastjson.JSONObject;
 import com.future.link.common.Result;
 import com.future.link.user.model.WxUser;
 import com.future.link.utils.Constant;
 import com.future.link.utils.HttpsGetUtil;
+import com.future.link.utils.MessageUtil;
 import com.future.link.utils.PayCommonUtil;
-import com.future.link.utils.PosUtil;
 import com.future.link.utils.ToolDateTime;
 import com.future.link.utils.WXUtils;
 import com.future.link.utils.XMLUtil;
+import com.future.link.utils.XmlTextParse;
 import com.future.link.wx.sevice.WXService;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.Prop;
@@ -37,31 +39,73 @@ public class WXController extends Controller {
 	 * @throws IOException 
 	 */
 	public void doFirstAuth() throws IOException {
-		//PropKit.use("WxConfig.properties");
 		
-		System.out.println("开始校验签名");
-        /**
-         * 接收微信服务器发送请求时传递过来的4个参数
-         */
-        String signature = getPara("signature");//微信加密签名signature结合了开发者填写的token参数和请求中的timestamp参数、nonce参数。
-        String timestamp = getPara("timestamp");//时间戳
-        String nonce = getPara("nonce");//随机数
-        String echostr = getPara("echostr");//随机字符串
-        Prop prop = PropKit.use("WxConfig.properties");
-		
-        //排序
-        String sortString = WXUtils.sort(prop.get("token").trim(), timestamp, nonce);
-        //加密
-        String mySignature = WXUtils.sha1(sortString);
-        //校验签名
-        if (mySignature != null && mySignature != "" && mySignature.equals(signature)) {
-            System.out.println("签名校验通过。");
-            //如果检验成功输出echostr，微信服务器接收到此输出，才会确认检验完成。
-            //response.getWriter().println(echostr);
-            this.getResponse().getWriter().write(echostr);
-        } else {
-            System.out.println("签名校验失败.");
+		Boolean isGet = this.getRequest().getMethod().equalsIgnoreCase("GET");
+
+        if(isGet){
+
+        	System.out.println("开始校验签名");
+            /**
+             * 接收微信服务器发送请求时传递过来的4个参数
+             */
+            String signature = getPara("signature");//微信加密签名signature结合了开发者填写的token参数和请求中的timestamp参数、nonce参数。
+            String timestamp = getPara("timestamp");//时间戳
+            String nonce = getPara("nonce");//随机数
+            String echostr = getPara("echostr");//随机字符串
+            Prop prop = PropKit.use("WxConfig.properties");
+    		
+            //排序
+            String sortString = WXUtils.sort(prop.get("token").trim(), timestamp, nonce);
+            //加密
+            String mySignature = WXUtils.sha1(sortString);
+            //校验签名
+            if (mySignature != null && mySignature != "" && mySignature.equals(signature)) {
+                System.out.println("签名校验通过。");
+                //如果检验成功输出echostr，微信服务器接收到此输出，才会确认检验完成。
+                //response.getWriter().println(echostr);
+                this.getResponse().getWriter().write(echostr);
+            } else {
+                System.out.println("签名校验失败.");
+            }
+
+        }else{
+
+        	this.getRequest().setCharacterEncoding("UTF-8");
+    		this.getResponse().setCharacterEncoding("UTF-8");
+    		PrintWriter out = this.getResponse().getWriter();
+    		String message = "success";
+    		try {
+    			//把微信返回的xml信息转义成map
+    			Map<String, String> map = XmlTextParse.xmlToMap(this.getRequest());
+    			String fromUserName = map.get("FromUserName");//消息来源用户标识
+    			String toUserName = map.get("ToUserName");//消息目的用户标识
+    			String msgType = map.get("MsgType");//消息类型
+    			String content = map.get("Content");//消息内容
+    			
+    			String eventType = map.get("Event");
+    			if(MessageUtil.MSGTYPE_EVENT.equals(msgType)){//如果为事件类型
+    				if(MessageUtil.MESSAGE_SUBSCIBE.equals(eventType)){//处理订阅事件
+    					message = MessageUtil.subscribeForText(toUserName, fromUserName);
+    					WxUser user = new WxUser();
+    					user.setOpenId(fromUserName);
+    					WXService.service.addWXUser(user);
+    				}else if(MessageUtil.MESSAGE_UNSUBSCIBE.equals(eventType)){//处理取消订阅事件
+    					message = MessageUtil.unsubscribe(toUserName, fromUserName);
+    				}
+    				this.getResponse().getWriter().write(message);
+    			}
+    		} catch (DocumentException e) {
+    			e.printStackTrace();
+    		}finally{
+    			out.println(message);
+    			if(out!=null){
+    				out.close();
+    			}
+    		}
+
         }
+        
+		
 	}
 	
 	/**
@@ -73,7 +117,7 @@ public class WXController extends Controller {
 		
 		Prop prop = PropKit.use("WxConfig.properties");
 
-        String redirectUri = "http://fccd104a.ngrok.io/link/wx/auth";
+        //String redirectUri = "http://fccd104a.ngrok.io/link/wx/auth";
 
         String url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + prop.get("appid") +"&redirect_uri=" + prop.get("redirecturi") +"&response_type=code&scope=snsapi_userinfo&state=1&connect_redirect=1#wechat_redirect";
         this.getResponse().sendRedirect(url);
@@ -166,44 +210,17 @@ public class WXController extends Controller {
             user.setProvince(user_province);
             user.setSex(user_sex);
 //            customerInfo.setUnionId(user_unionid);
-            this.getRequest().getSession().setAttribute("wxuser", user);
-            WXService.service.addWXUser(user);
             
+            WXService.service.addWXUser(user);
+            user.setNickName(URLDecoder.decode(user_nickname, "utf-8"));
+            this.getRequest().getSession().setAttribute("wxuser", user);
             return;
     }
     
     /**
      * 微信支付
-     * @throws IOException 
+     * @throws Exception
      */
-    public void wxPay() throws IOException {
-    	
-    	Prop prop = PropKit.use("wxconfig.properties");
-    	
-    	JSONObject json = new JSONObject();
-        json.put("mid", prop.get("partner"));
-        json.put("tid", prop.get("partnerkey"));
-        json.put("msgType", "WXPay.jsPay");
-        json.put("msgSrc", "WWW.BZCCl.COM");
-        json.put("instMid", prop.get("apikey"));
-        json.put("merOrderId", "1");
-        
-        json.put("orderDesc", "服务费");
-        //        json.put("totalAmount", "1");
-        json.put("totalAmount", "1");
-        json.put("notifyUrl", prop.get("notifyUrl"));
-        json.put("returnUrl", prop.get("returnUrl"));
-        json.put("secureTransaction", true);
-        Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-        String requestTime = sdf.format(date);
-        json.put("requestTimestamp", requestTime);
-//
-        String url = PosUtil.makeOrderRequest(json, prop.get("secretKey"), prop.get("public.url"));
-        this.getResponse().sendRedirect(url);
-    	
-    }
-    
     public void wxPayH5() throws Exception {
 		
     	SortedMap<Object, Object> result = new TreeMap<Object, Object>();
@@ -212,7 +229,7 @@ public class WXController extends Controller {
 		
 		try {
 			// 付款金额，必填
-			String total_fee = this.getRequest().getParameter("WIDtotal_fee");
+			String total_fee = this.getPara("totalFee");
 			// 充值类型：1 积分 2 现金
 			//czstyle = Integer.valueOf(request.getParameter("czstyle"));
 			// ip地址获取
@@ -229,7 +246,7 @@ public class WXController extends Controller {
 			// 价格 注意：价格的单位是分
 			String order_price = new BigDecimal(total_fee).multiply(new BigDecimal(100)).toString().split("\\.")[0];
 			// 自己网站上的订单号
-			String out_trade_no = "1";
+			String out_trade_no = this.getPara("orderId");
 			// 获取发起电脑 ip
 			String spbill_create_ip = HttpsGetUtil.getRealIp(this.getRequest());
 			
@@ -254,6 +271,7 @@ public class WXController extends Controller {
 			
 			//packageParams.put("scene_info", "{\"h5_info\": {\"type\":\"Wap\",\"wap_url\": \"http://www.xxxx.com\",\"wap_name\": \"学易资源分享平台\"}}");
 			String sign = PayCommonUtil.createSign("UTF-8", packageParams, key);
+			//String sign =  WXUtils.getSign(packageParams, "utf-8", key);
 			packageParams.put("sign", sign);
 			String requestXML = PayCommonUtil.getRequestXml(packageParams);
 			String resXml = HttpsGetUtil.postData(prop.get("unifiedorderurl"), requestXML);
@@ -295,7 +313,7 @@ public class WXController extends Controller {
 //		String appid  = params.get("appid");
 //		//商户号
 //		String mch_id  = params.get("mch_id");
-		String result_code  = params.get("result_code")+"";
+		//String result_code  = params.get("result_code")+"";
 //		String openId      = params.get("openid");
 //		//交易类型
 //		String trade_type      = params.get("trade_type");
@@ -314,15 +332,45 @@ public class WXController extends Controller {
 		
 		/////////////////////////////以下是附加参数///////////////////////////////////
 		
-		String attach      = params.get("attach")+"";
+		//String attach      = params.get("attach")+"";
 //		String fee_type      = params.get("fee_type");
 //		String is_subscribe      = params.get("is_subscribe");
 //		String err_code      = params.get("err_code");
 //		String err_code_des      = params.get("err_code_des");
 		
+		String return_code=params.get("return_code")+"";  
+        String result_code=params.get("result_code")+"";  
+        String resXml = "";
+        if("SUCCESS".equals(return_code)&&"SUCCESS".equals(result_code)){  
+            //表示支付成功  
+            //sign进行验签，确保消息的真伪  
+            String sign = params.get("sign")+"";//sign不参与验签  
+            
+            Prop prop = PropKit.use("wxconfig.properties");
+    		
+    		String key = prop.get("apikey"); // key 注：key为商户
+            String reSign = WXUtils.getSign(params, key, "utf-8");  
+            if(sign.equals(reSign)){  
+                //验签成功，进行结算  
+                System.out.println("验签成功");
+                
+                
+                  
+                //----待修改，结算时，加锁加事务，验证订单是否有效，判断金额是否正确  
+                resXml = "<xml>" + "<return_code><![CDATA[SUCCESS]]></return_code>" + "<return_msg><![CDATA[OK]]></return_msg>" + "</xml> ";
+            }else {
+            	resXml = "<xml>" + "<return_code><![CDATA[FAIL]]></return_code>" + "<return_msg><![CDATA[签名错误]]></return_msg>" + "</xml> ";
+            }
+        }else {
+        	resXml = "<xml>" + "<return_code><![CDATA[FAIL]]></return_code>" + "<return_msg><![CDATA[签名错误]]></return_msg>" + "</xml> ";
+        }
+        
+        BufferedOutputStream out = new BufferedOutputStream(this.getResponse().getOutputStream());
+		out.write(resXml.getBytes());
+		out.flush();
+		out.close();
 		
-		String userid = null;
-		try {
+		/*try {
  
 			// 过滤空 设置 TreeMap
 			SortedMap<Object, Object> packageParams = new TreeMap<Object, Object>();
@@ -338,9 +386,6 @@ public class WXController extends Controller {
 				packageParams.put(parameter, v);
 			}
 			// 查看回调参数
-			// LogUtil.writeMsgToFile(packageParams.toString());
-			String total_fee = new BigDecimal((String) packageParams.get("total_fee")).divide(new BigDecimal(100)).toString();
-			userid = (String) packageParams.get("userid");
 			// 账号信息
 			String resXml = "";
 			// ------------------------------
@@ -351,7 +396,7 @@ public class WXController extends Controller {
 				try {
 				} catch (Exception e) {
 				}
-				////////// 执行自己的业务逻辑////////////////
+				////////// 执行自己的业务逻辑////////////////return_msg
 				// 通知微信.异步确认成功.必写.不然会一直通知后台.八次之后就认为交易失败了.
 				resXml = "<xml>" + "<return_code><![CDATA[SUCCESS]]></return_code>" + "<return_msg><![CDATA[OK]]></return_msg>" + "</xml> ";
 			} else {
@@ -363,7 +408,7 @@ public class WXController extends Controller {
 			out.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}*/
  
 	}
 	

@@ -25,7 +25,7 @@ Table: user_wx_user
 ------------+--------------+------+-----+---------+---------
  id         | INT(10)      | NO   | PRI |         |         
  openId     | VARCHAR(50)  | NO   |     |         | 微信名称    
- nickName   | VARCHAR(100) | NO   |     |         |         
+ nickName   | VARCHAR(100) | YES  |     |         |         
  sex        | VARCHAR(20)  | YES  |     |         |         
  province   | VARCHAR(20)  | YES  |     |         |         
  city       | VARCHAR(20)  | YES  |     |         |         

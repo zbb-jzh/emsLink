@@ -95,9 +95,15 @@
             			<a href="#" class="ui-icon-close" ms-click="removeInput('remark')" ms-visible="send.remark != ''">
             			</a>
         		</div>
-        	<div class="ui-btn-wrap" ms-click="add()">
-            	<button class="ui-btn-lg ui-btn-primary">
-               	 提交
+        	<div class="ui-btn-wrap" >
+            	<button class="ui-btn-lg ui-btn-primary" style="margin-bottom: 10px;" ms-click="add(1)">
+               	 货到付款
+            	</button>
+            	<button class="ui-btn-lg ui-btn-primary"  style="margin-bottom: 10px;" ms-if="wxuser.unusedNum > 0" ms-click="add(3)">
+               	 代金券支付
+            	</button>
+            	<button class="ui-btn-lg ui-btn-primary"  style="margin-bottom: 10px;" ms-click="add(2)">
+               	 微信支付
             	</button>
         	</div>
         	

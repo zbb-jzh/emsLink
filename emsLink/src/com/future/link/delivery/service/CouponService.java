@@ -34,4 +34,12 @@ public class CouponService {
 		return num;
 		
 	}
+	
+	/**
+	 * 获取用户最早得到的优惠券
+	 * @return
+	 */
+	public Coupon getCoupon(int userId) {
+		return Coupon.dao.findFirst("select * from delivery_coupon where wxUserId = ? and status = 0 order by createTime", userId);
+	}
 }

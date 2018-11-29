@@ -5,7 +5,6 @@ import com.future.link.delivery.model.Send;
 import com.future.link.delivery.service.CouponService;
 import com.future.link.delivery.service.SendDeliveryService;
 import com.future.link.goods.service.CategoryService;
-import com.future.link.user.model.User;
 import com.future.link.user.model.WxUser;
 import com.future.link.utils.Constant;
 import com.jfinal.core.Controller;
