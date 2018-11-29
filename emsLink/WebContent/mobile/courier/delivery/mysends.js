@@ -51,7 +51,7 @@ var vm = avalon.define({
 		    }
 		});
 	},
-	cancleOrder:function(id){
+	/*cancleOrder:function(id){
 		$.ajax({
 		    url: "../../../delivery/doCancleOrder",    //请求的url地址
 		    dataType: "json",   //返回格式为json
@@ -72,7 +72,7 @@ var vm = avalon.define({
 		    	console.log('error');
 		    }
 		});
-	},
+	},*/
     removeInput:function(name){
     	vm.consumer[name] = '';
     },
