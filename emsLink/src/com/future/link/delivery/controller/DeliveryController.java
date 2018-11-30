@@ -112,7 +112,7 @@ public class DeliveryController extends Controller{
 	}
 	
 	/**
-	 * 获取庄列表
+	 * 获取庄列表 
 	 */
 	public void getChildren()
 	{
