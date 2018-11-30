@@ -20,6 +20,7 @@ var vm = avalon.define({
 		    	if (res.status == 1) {
 		    		console.log('sucess');
 		    		vm.wxuser = res.data;
+		    		vm.yhqNum = vm.wxuser.unusedNum;
 		    		//window.location.href = "consumer_node.html";
 		    		//vm.goback();
                 }else{
