@@ -14,10 +14,10 @@ var vm = avalon.define({
 		$.ajax({
 		    url: "../../../delivery/getWxUser",    //请求的url地址
 		    dataType: "json",   //返回格式为json
-		    data: {},    //参数值
+		    data: {type:2},    //参数值
 		    type: "post",   //请求方式
 		    success: function(res) {
-		    	if (res.status == 1) {
+		    	if (res.status == 100) {
 		    		console.log('sucess');
 		    		vm.wxuser = res.data;
 		    		vm.yhqNum = vm.wxuser.unusedNum;
@@ -43,5 +43,5 @@ var vm = avalon.define({
 		window.location.href = '#/consumer/list';
 	}
 });
-
+vm.getWxUser();
 avalon.scan();
