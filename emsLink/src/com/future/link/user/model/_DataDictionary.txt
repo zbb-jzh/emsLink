@@ -23,7 +23,7 @@ Table: user_wx_user
 ------------+--------------+------+-----+---------+---------
  Field      | Type         | Null | Key | Default | Remarks 
 ------------+--------------+------+-----+---------+---------
- id         | INT(10)      | NO   | PRI |         |         
+ id         | BIGINT(19)   | NO   | PRI |         |         
  openId     | VARCHAR(50)  | NO   |     |         | 微信名称    
  nickName   | VARCHAR(100) | YES  |     |         |         
  sex        | VARCHAR(20)  | YES  |     |         |         
@@ -33,5 +33,7 @@ Table: user_wx_user
  headimgUrl | VARCHAR(500) | YES  |     |         |         
  privilege  | VARCHAR(500) | YES  |     |         |         
  unionId    | VARCHAR(50)  | YES  |     |         |         
+ townId     | BIGINT(19)   | YES  |     |         | 用来存放用户最新一次订单 ，镇
+ teamId     | BIGINT(19)   | YES  |     |         | 用来存放用户最新一次订单 ，镇
 ------------+--------------+------+-----+---------+---------
 

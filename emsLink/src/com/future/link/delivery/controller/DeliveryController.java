@@ -134,6 +134,12 @@ public class DeliveryController extends Controller{
 	public void getWxUser() {
 		WxUser user=(WxUser) this.getRequest().getSession().getAttribute("wxuser");
 		user.setUnusedNum(CouponService.service.countUnusedCoupon(user.getId()));
+		int type = this.getParaToInt("type");
+		Send send = SendDeliveryService.service.findNewSend(user, type);
+		if(null != send) {
+			user.setTownId(send.getTownId());
+			user.setTeamId(send.getTeamId());
+		}
 		renderJson(new Result(Constant.SUCCESS, user));
 	}
 

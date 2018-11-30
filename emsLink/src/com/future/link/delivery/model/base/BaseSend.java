@@ -81,11 +81,11 @@ public abstract class BaseSend<M extends BaseSend<M>> extends Model<M> implement
 		return get("teamId");
 	}
 
-	public void setWxUserId(java.lang.Integer wxUserId) {
+	public void setWxUserId(java.lang.Long wxUserId) {
 		set("wxUserId", wxUserId);
 	}
 
-	public java.lang.Integer getWxUserId() {
+	public java.lang.Long getWxUserId() {
 		return get("wxUserId");
 	}
 

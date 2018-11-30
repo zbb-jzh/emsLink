@@ -9,11 +9,11 @@ import com.jfinal.plugin.activerecord.IBean;
 @SuppressWarnings("serial")
 public abstract class BaseWxUser<M extends BaseWxUser<M>> extends Model<M> implements IBean {
 
-	public void setId(java.lang.Integer id) {
+	public void setId(java.lang.Long id) {
 		set("id", id);
 	}
 
-	public java.lang.Integer getId() {
+	public java.lang.Long getId() {
 		return get("id");
 	}
 
@@ -87,6 +87,22 @@ public abstract class BaseWxUser<M extends BaseWxUser<M>> extends Model<M> imple
 
 	public java.lang.String getUnionId() {
 		return get("unionId");
+	}
+
+	public void setTownId(java.lang.Long townId) {
+		set("townId", townId);
+	}
+
+	public java.lang.Long getTownId() {
+		return get("townId");
+	}
+
+	public void setTeamId(java.lang.Long teamId) {
+		set("teamId", teamId);
+	}
+
+	public java.lang.Long getTeamId() {
+		return get("teamId");
 	}
 
 }

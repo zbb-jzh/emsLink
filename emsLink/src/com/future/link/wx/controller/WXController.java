@@ -116,16 +116,20 @@ public class WXController extends Controller {
 	 * @return
 	 * @throws Exception
 	 */
-	public String getWxUserInfo() throws Exception{
-		
-		Prop prop = PropKit.use("WxConfig.properties");
+	public void getWxUserInfo() throws Exception{
+		WxUser user=(WxUser) this.getRequest().getSession().getAttribute("wxuser");
+		String pageUrl = this.getPara("url");
+		if(null == user) {
+			Prop prop = PropKit.use("WxConfig.properties");
+			
 
-        //String redirectUri = "http://fccd104a.ngrok.io/link/wx/auth";
+	        //String redirectUri = "http://fccd104a.ngrok.io/link/wx/auth";
 
-        String url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + prop.get("appid") +"&redirect_uri=" + prop.get("redirecturi") +"&response_type=code&scope=snsapi_userinfo&state=1&connect_redirect=1#wechat_redirect";
-        this.getResponse().sendRedirect(url);
-//        HttpsGetUtil.doHttpsGetJson(url);
-        return null;
+	        String url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + prop.get("appid") +"&redirect_uri=" + prop.get("redirecturi") +"&response_type=code&scope=snsapi_userinfo&state="+ pageUrl +"&connect_redirect=1#wechat_redirect";
+	        this.getResponse().sendRedirect(url);
+		}else {
+			redirect(pageUrl);
+		}
     }
 	
 	/**
@@ -214,10 +218,11 @@ public class WXController extends Controller {
             user.setSex(user_sex);
 //            customerInfo.setUnionId(user_unionid);
             
-            WXService.service.addWXUser(user);
+            WxUser wxuser = WXService.service.addWXUser(user);
             user.setNickName(URLDecoder.decode(user_nickname, "utf-8"));
-            this.getRequest().getSession().setAttribute("wxuser", user);
-            return;
+            this.getRequest().getSession().setAttribute("wxuser", wxuser);
+            String pageUrl = this.getPara("state");
+            redirect(pageUrl);
     }
     
     /**

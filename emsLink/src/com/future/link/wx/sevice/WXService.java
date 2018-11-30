@@ -17,7 +17,7 @@ public class WXService {
 	
 	
 	@Before(Tx.class)
-    public void addWXUser(WxUser user) throws UnsupportedEncodingException {
+    public WxUser addWXUser(WxUser user) throws UnsupportedEncodingException {
 		
 		WxUser model = WxUser.dao.findFirst("select * from user_wx_user where openId = ? ", user.getOpenId());
         if(null != model){
@@ -50,6 +50,7 @@ public class WXService {
         	}
         	
         	model.update();
+        	return model;
         }else {
         	
         	user.save();
@@ -59,6 +60,7 @@ public class WXService {
         	coupon.setCreateTime(ToolDateTime.getDate());
         	coupon.setStatus(0);
         	coupon.save();
+        	return user;
         }
         
     }

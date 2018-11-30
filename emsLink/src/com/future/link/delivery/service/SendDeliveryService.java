@@ -137,6 +137,20 @@ public class SendDeliveryService {
 	}
 	
 	/**
+	 * 查询用户最新订单地址
+	 * @param user
+	 * @return
+	 */
+	public Send findNewSend(WxUser user, int type) {
+		
+		List<Send> sends = Send.dao.find("select * from delivery_send where type = ? and wxUserId = ?",type,user.getId());
+		if(null != sends && sends.size() > 0) {
+			return sends.get(0);
+		}
+		return null;
+	}
+	
+	/**
      * 分页查询
      * @return
      */

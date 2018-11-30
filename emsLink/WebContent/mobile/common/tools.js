@@ -50,6 +50,15 @@ var getUrlData = function (key) {
     return eval("urlData." + key)
 };
 
+var  is_weixn = function(){
+    var ua = navigator.userAgent.toLowerCase();
+    if(ua.match(/MicroMessenger/i)=="micromessenger") {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 var isEmpty = function (val) {
     if (null == val || undefined == val || '' == val) {
         return true;

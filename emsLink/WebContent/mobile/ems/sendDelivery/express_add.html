@@ -24,7 +24,7 @@
     		<!-- <div class="ui-form-item ui-form-item-show ui-border-b"> -->
     			<div class="ui-tooltips ui-tooltips-warn">
     			<div class="ui-tooltips-cnt ui-border-b">
-        		<i></i>请选择对应的快递公司，几个快递就选几个快递公司！
+        		<i></i>请选择快递公司，几个快递就选几个快递公司！
     		</div>
 			<!-- </div> -->
 				</div> 
@@ -108,7 +108,12 @@
         	</div>
         	
     <!-- </form> -->
+    <form id="loginSubmit" action="/link/wx/getWxUserInfo">
+         <input type="hidden" id="url" name="url" value="/mobile/ems/sendDelivery/express_add.html">
+        </form>
+        <div id="test"></div>
 </div>
+	
 	</body>
 
 </html>

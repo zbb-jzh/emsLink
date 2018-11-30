@@ -6,7 +6,7 @@ var vm = avalon.define({
 	$id:'expressadd',
 	expressList:[{id:1,name:'圆通快递'},{id:2,name:'申通快递'},{id:3,name:'汇通快递'},{id:4,name:'中通快递'},{id:5,name:'韵达快递'},{id:6,name:'天天快递'}],
 	send:{id:'',name:'', phone:'',townId:"",teamId:"",address:'', remark:"", yfPrice:'',type:2,expressName:'',status:1,payStatus:1},
-	wxuser:{unusedNum:0,nickName:'', headimgUrl:''},
+	wxuser:{unusedNum:0,nickName:'', headimgUrl:'',townId:"",teamId:"",},
 	address1:"",
 	address2:"",
 	address3:"",
@@ -44,12 +44,14 @@ var vm = avalon.define({
 		$.ajax({
 		    url: "../../../delivery/getWxUser",    //请求的url地址
 		    dataType: "json",   //返回格式为json
-		    data: {},    //参数值
+		    data: {type:2},    //参数值
 		    type: "post",   //请求方式
 		    success: function(res) {
-		    	if (res.status == 1) {
+		    	if (res.status == 100) {
 		    		console.log('sucess');
 		    		vm.wxuser = res.data;
+		    		vm.address1 = vm.wxuser.townId;
+		    		vm.address2 = vm.wxuser.teamId;
 		    		//window.location.href = "consumer_node.html";
 		    		//vm.goback();
                 }else{
@@ -71,17 +73,46 @@ var vm = avalon.define({
 		    success: function(res) {
 		    	if (res.status == 100) {
 		    		vm.addressList = res.data;
-		    		vm.address1 = vm.addressList[0].id;
+		    		//vm.address1 = vm.addressList[0].id;
 		    		$.ajax({
-		    		    url: "/link/delivery/getChildren",    //请求的url地址
+		    		    url: "../../../delivery/getWxUser",    //请求的url地址
 		    		    dataType: "json",   //返回格式为json
-		    		    data: {pid:vm.addressList[0].id},    //参数值
+		    		    data: {type:2},    //参数值
 		    		    type: "post",   //请求方式
 		    		    success: function(res) {
 		    		    	if (res.status == 100) {
-		    		    		vm.address1List = res.data;
-		    		    		vm.address2 = vm.address1List[0].id;
-		    		    		vm.send.yfPrice = vm.address1List[0].yfPrice;
+		    		    		console.log('sucess');
+		    		    		vm.wxuser = res.data;
+		    		    		if(vm.wxuser.townId){
+		    		    			vm.address1 = vm.wxuser.townId;
+		    		    		}else{
+		    		    			vm.address1 = vm.addressList[0].id;
+		    		    		}
+		    		    		
+		    		    		vm.address2 = vm.wxuser.teamId;
+		    		    		
+		    		    		$.ajax({
+		    		    		    url: "/link/delivery/getChildren",    //请求的url地址
+		    		    		    dataType: "json",   //返回格式为json
+		    		    		    data: {pid:vm.address1},    //参数值
+		    		    		    type: "post",   //请求方式
+		    		    		    success: function(res) {
+		    		    		    	if (res.status == 100) {
+		    		    		    		vm.address1List = res.data;
+		    		    		    		if(!vm.address2){
+		    		    		    			vm.address2 = vm.address1List[0].id;
+		    		    		    		}
+		    		    		    		vm.send.yfPrice = vm.address1List[0].yfPrice;
+		    		                    }else{
+		    		                    	alert(res.data);
+		    		                    }
+		    		    		    },
+		    		    		    error: function() {
+		    		    		    	console.log('error');
+		    		    		    }
+		    		    		});
+		    		    		//window.location.href = "consumer_node.html";
+		    		    		//vm.goback();
 		                    }else{
 		                    	alert(res.data);
 		                    }
@@ -90,6 +121,8 @@ var vm = avalon.define({
 		    		    	console.log('error');
 		    		    }
 		    		});
+		    		
+		    		
                 }else{
                 	alert(res.data);
                 }
@@ -287,5 +320,10 @@ var vm = avalon.define({
 	}
 });
 vm.getAddress();
-vm.getWxUser();
+//vm.getWxUser();
 avalon.scan();
+
+/*$(function(){
+	$("#loginSubmit").submit();
+	
+})*/

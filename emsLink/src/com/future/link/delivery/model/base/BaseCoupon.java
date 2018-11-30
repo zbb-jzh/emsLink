@@ -17,11 +17,11 @@ public abstract class BaseCoupon<M extends BaseCoupon<M>> extends Model<M> imple
 		return get("id");
 	}
 
-	public void setWxUserId(java.lang.Integer wxUserId) {
+	public void setWxUserId(java.lang.Long wxUserId) {
 		set("wxUserId", wxUserId);
 	}
 
-	public java.lang.Integer getWxUserId() {
+	public java.lang.Long getWxUserId() {
 		return get("wxUserId");
 	}
 
