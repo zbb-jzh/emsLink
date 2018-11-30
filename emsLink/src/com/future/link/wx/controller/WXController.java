@@ -18,6 +18,7 @@ import org.dom4j.DocumentException;
 
 import com.alibaba.fastjson.JSONObject;
 import com.future.link.common.Result;
+import com.future.link.delivery.service.SendDeliveryService;
 import com.future.link.user.model.WxUser;
 import com.future.link.utils.Constant;
 import com.future.link.utils.HttpsGetUtil;
@@ -342,6 +343,7 @@ public class WXController extends Controller {
 		
 		String return_code=params.get("return_code")+"";  
         String result_code=params.get("result_code")+"";  
+        String out_trade_no = params.get("out_trade_no")+"";
         String resXml = "";
         if("SUCCESS".equals(return_code)&&"SUCCESS".equals(result_code)){  
             //表示支付成功  
@@ -356,8 +358,7 @@ public class WXController extends Controller {
                 //验签成功，进行结算  
                 System.out.println("验签成功");
                 
-                
-                  
+                SendDeliveryService.service.updateOrderPayStatus(Integer.valueOf(out_trade_no));
                 //----待修改，结算时，加锁加事务，验证订单是否有效，判断金额是否正确  
                 resXml = "<xml>" + "<return_code><![CDATA[SUCCESS]]></return_code>" + "<return_msg><![CDATA[OK]]></return_msg>" + "</xml> ";
             }else {

@@ -10,6 +10,7 @@ var vm = avalon.define({
 	id:'',
 	expressName:'',
 	expressNo:'',
+	yfPrice:'',
 	getOrderList:function(status){
 		$.ajax({
 		    url: "../../../delivery/doSearchWxUserOrder",    //请求的url地址
@@ -45,7 +46,11 @@ var vm = avalon.define({
 	confirm:function(status){
 		var data = '';
 		if(status == 5){
-			data = {id:vm.id,status:status};
+			if(vm.yfPrice == 0){
+				alert("快递费不能为空！");
+				return;
+			}
+			data = {id:vm.id,status:status,yfPrice:vm.yfPrice};
 		}else{
 			if(vm.expressName == ''){
 				alert("快递公司名称不能为空！");
@@ -66,8 +71,11 @@ var vm = avalon.define({
 		    	if (res.status == 1) {
 		    		console.log('sucess');
 		    		if(status == 5){
+		    			vm.yfPrice = "";
 		    			$("#conformshoujian").removeClass("show");
 		    		}else{
+		    			vm.expressName = '';
+		    			vm.expressNo = ''
 		    			$("#conformfahuo").removeClass("show");
 		    		}
 		    		alert("操作成功");

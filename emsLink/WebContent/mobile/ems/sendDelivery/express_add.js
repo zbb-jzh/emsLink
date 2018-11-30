@@ -159,11 +159,11 @@ var vm = avalon.define({
 			alert("快递公司不能为空！");
 			return false;
 		}
-		var slectedExpress = vm.expressName + "--";
+		var slectedExpress = vm.expressName + "-";
 		
 		for(var i=2; i<=vm.index; i++){
 			if($("#selectExpress" + i + " option:selected").text()){
-				slectedExpress += $("#selectExpress" + i + " option:selected").text() + "--";
+				slectedExpress += $("#selectExpress" + i + " option:selected").text() + "-";
 			}
 		}
 		vm.send.expressName = slectedExpress;

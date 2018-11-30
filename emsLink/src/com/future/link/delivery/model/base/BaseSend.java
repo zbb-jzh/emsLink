@@ -153,4 +153,12 @@ public abstract class BaseSend<M extends BaseSend<M>> extends Model<M> implement
 		return get("payStatus");
 	}
 
+	public void setExpressNo(java.lang.String expressNo) {
+		set("expressNo", expressNo);
+	}
+
+	public java.lang.String getExpressNo() {
+		return get("expressNo");
+	}
+
 }

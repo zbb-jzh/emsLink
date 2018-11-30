@@ -29,6 +29,7 @@ Table: delivery_send
  kdyName        | VARCHAR(100) | YES  |     |         | 快递员姓名   
  kdyPhone       | VARCHAR(50)  | YES  |     |         | 快递员电话   
  mailingAddress | VARCHAR(500) | YES  |     |         | 邮寄地址    
- payStatus      | INT(10)      | YES  |     |         | 1未支付，2，微信支付，3券支付,
+ payStatus      | INT(10)      | YES  |     |         | 0，未支付，1货到付款，2，微信支付，3券支付,
+ expressNo      | VARCHAR(100) | YES  |     |         | 快递单号    
 ----------------+--------------+------+-----+---------+---------
 

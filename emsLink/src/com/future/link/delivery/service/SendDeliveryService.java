@@ -45,8 +45,8 @@ public class SendDeliveryService {
 				coupon.update();
 			}
 		}
-		if(send.getStatus() == 2) {
-			send.setStatus(1);
+		if(send.getPayStatus() == 2) {
+			send.setPayStatus(0);
 		}
 		send.save();
 		return new Result(Result.SUCCESS_STATUS, send);
@@ -82,10 +82,10 @@ public class SendDeliveryService {
 	 * @param id
 	 * @return
 	 */
-	public Result confirmMailingOrder(int id, int status, String expressName, String expressNo) {
+	public Result confirmMailingOrder(int id, int status, String expressName, String expressNo, String yfPrice) {
 		
 		if(status == 5) {
-			Db.update("update delivery_send set status = ? where id = ?", status, id);
+			Db.update("update delivery_send set status = ?, yfPrice = ? where id = ?", status, Double.valueOf(yfPrice), id);
 		}else {
 			Db.update("update delivery_send set status = ? , expressName = ?, expressNo = ? where id = ?", status,expressName, expressNo, id);
 		}
@@ -96,9 +96,9 @@ public class SendDeliveryService {
 	/**
 	 * 微信回调成功，修改订单状态
 	 */
-	public void conformOrder(int id) {
+	public void updateOrderPayStatus(int id) {
 		
-		Db.update("update delivery_send set status = 2 where id = ?", id);
+		Db.update("update delivery_send set payStatus = 2 where id = ?", id);
 	}
 	
 	/**
@@ -111,11 +111,11 @@ public class SendDeliveryService {
 	public Result searchWxUserOrder(int type, int status, WxUser user) {
 		List<Send> list;
 		if(status == 3) {
-			list = Send.dao.find("select * from delivery_send where payStatus = 2 or payStatus = 3 and type = ? ", type);
+			list = Send.dao.find("select * from delivery_send where payStatus = 2 or payStatus = 3 and type = ? order by createTime desc ", type);
 		}else if(status == 1) {
-			list = Send.dao.find("select * from delivery_send where type = ? and payStatus = 0 ", type);
+			list = Send.dao.find("select * from delivery_send where type = ? and payStatus = 0 order by createTime desc ", type);
 		}else {
-			list = Send.dao.find("select * from delivery_send where type = ? and status = ? ", type, status);
+			list = Send.dao.find("select * from delivery_send where type = ? and status = ? order by createTime desc ", type, status);
 		}
 		
 		return new Result(Result.SUCCESS_STATUS, list);

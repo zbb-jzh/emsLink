@@ -73,7 +73,8 @@ public class DeliveryController extends Controller{
 		int status = this.getParaToInt("status");
 		String expressName = this.getPara("expressName");
 		String expressNo = this.getPara("expressNo");
-		renderJson(SendDeliveryService.service.confirmMailingOrder(id, status, expressName, expressNo));
+		String yfPrice = this.getPara("yfPrice");
+		renderJson(SendDeliveryService.service.confirmMailingOrder(id, status, expressName, expressNo, yfPrice));
 	}
 	
 	/**
