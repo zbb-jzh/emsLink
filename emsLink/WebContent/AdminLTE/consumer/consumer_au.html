@@ -85,6 +85,26 @@
                     </div>
                     <!-- <button type="button" v-on:click="open()">地图</button> -->
                 </div>
+                <div class="form-group has-feedback" >
+                    <label class="control-label" for="userName">
+                        <span ms-if="false">请输入登陆用户名</span>
+                    </label>
+                    <label class="col-md-2 control-label">登陆用户名</label>
+                    <div class="col-md-8">
+                        <input class="form-control" id="userName" placeholder="登陆用户名" ms-duplex="consumer.userName" />
+                    </div>
+                    <!-- <button type="button" v-on:click="open()">地图</button> -->
+                </div>
+                <div class="form-group has-feedback" >
+                    <label class="control-label" for="userPwd">
+                        <span ms-if="false">请输入登陆密码</span>
+                    </label>
+                    <label class="col-md-2 control-label">登陆密码</label>
+                    <div class="col-md-8">
+                        <input class="form-control" id="userPwd" placeholder="登陆用户名" ms-duplex="consumer.userPwd" />
+                    </div>
+                    <!-- <button type="button" v-on:click="open()">地图</button> -->
+                </div>
                 <!-- <div class="form-group has-feedback" v-bind:class="{'has-warning':$validation.longitude.invalid}">
                     <label class="control-label" for="longitude">
                         <span v-if="$validation.longitude.required">请设置经度</span>
