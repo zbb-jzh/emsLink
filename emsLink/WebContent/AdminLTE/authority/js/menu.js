@@ -12,7 +12,7 @@ var vm = avalon.define({
     isParent:1,
     model:{id:"",name: "",description: "",fontIcon: "",orderNum: 0,route: "",paths: "",parentId: "",isLeaf:0,subList:[],btnList:[]},
     menuBtn:{id:"", btnName:"",btnType:""},
-    menuBtnTypes:[{name:'新增', value:'add'}, {name:'删除', value:'delete'}, {name:'修改', value:'update'}, {name:'上下架', value:'onof'}],
+    menuBtnTypes:[{name:'新增', value:'add'}, {name:'删除', value:'delete'}, {name:'修改', value:'update'}, {name:'上下架', value:'onof'},{name:'查看信息', value:'look'}],
     hasAdd:false,
 	hasDelete:false,
 	hasUpdate:false,

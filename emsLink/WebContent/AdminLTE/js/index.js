@@ -13,7 +13,7 @@
 var menus = [];
 var currentPM;
 
-var btns = [{type:'add', has:false}, {type:'delete', has:false}, {type:'update', has:false}];
+var btns = [{type:'add', has:false}, {type:'delete', has:false}, {type:'update', has:false},{type:'look', has:false}];
 var vm = avalon.define({
 	$id:'index',
 	permissions:[],

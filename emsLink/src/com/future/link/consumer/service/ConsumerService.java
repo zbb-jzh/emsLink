@@ -36,6 +36,17 @@ public class ConsumerService {
 		consumer.setOrigin(Consumer.ORIGIN_OFFLINE);
 		consumer.setCreateTime(ToolDateTime.getDateByTime());
 		consumer.save();
+		
+		User user = new User();
+		user.setId(CommonUtil.getUUID());
+		user.setConsumerId(consumer.getId());
+		user.setName(consumer.getUserName());
+		user.setPassword(MD5Util.generatePassword(consumer.getUserPwd()));
+		user.setPhone(consumer.getPhone());
+		user.setType(2);
+		user.setCreateTime(ToolDateTime.getDateByTime());
+		user.save();
+		
 		return new Result(Result.SUCCESS_STATUS, "添加成功");
 	}
 	

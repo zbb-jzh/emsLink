@@ -2,7 +2,7 @@
 var vm = avalon.define({
 	$id:'consumerau',
 	consumerId:getUrlData('id'),
-	consumer:{id:'',name:'', type:'1', description:'',contactPerson:'',phone:'',contact:'',address:'',parentId:''},
+	consumer:{id:'',name:'', type:'1', description:'',contactPerson:'',phone:'',contact:'',address:'',parentId:'',userName:'',userPwd:''},
 	submited:false,
 	getConsumer:function()
 	{

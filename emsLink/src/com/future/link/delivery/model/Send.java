@@ -8,4 +8,16 @@ import com.future.link.delivery.model.base.BaseSend;
 @SuppressWarnings("serial")
 public class Send extends BaseSend<Send> {
 	public static final Send dao = new Send();
+	
+	private double totalPrice;
+
+	public double getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(double totalPrice) {
+		this.totalPrice = totalPrice;
+		this.put("totalPrice", totalPrice);
+	}
+
 }

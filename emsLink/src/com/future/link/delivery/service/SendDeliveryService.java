@@ -1,6 +1,7 @@
 package com.future.link.delivery.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.future.link.common.Result;
@@ -12,6 +13,7 @@ import com.future.link.user.model.WxUser;
 import com.future.link.utils.ToolDateTime;
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Enhancer;
+import com.jfinal.kit.StrKit;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.tx.Tx;
@@ -154,16 +156,95 @@ public class SendDeliveryService {
      * 分页查询
      * @return
      */
-    public Page<Send> page(int pageNumber, int pageSize, int type, int status, WxUser user){
+    public Page<Send> page(int pageNumber, int pageSize, String type, String status, String payStatus, String kdyName, String name, String phone, long startTime, long endTime, WxUser user){
 
-        StringBuffer sql = new StringBuffer(" from delivery_send where type = ? and status = ? and wxUserId = ? ");
+        StringBuffer sql = new StringBuffer(" from delivery_send where 1 = 1 ");
         List<Object> params = new ArrayList<>();
-        params.add(type);
-        params.add(status);
         
-        params.add(user.getId());
+        if(startTime > 0){
+        	sql.append(" and createTime >= ?");
+        	
+            params.add(new Date(startTime));
+        }
+        if(endTime > 0){
+        	sql.append(" and createTime <= ?");
+            params.add(new Date(endTime));
+        }
+        
+        if(StrKit.notBlank(kdyName)){
+            sql.append(" and kdyName like ?");
+            params.add("%" + kdyName + "%");
+        }
+        
+        if(StrKit.notBlank(name)){
+            sql.append(" and name like ?");
+            params.add("%" + name + "%");
+        }
+        
+        if(StrKit.notBlank(phone)){
+            sql.append(" and phone like ?");
+            params.add("%" + phone + "%");
+        }
+        
+        if(StrKit.notBlank(status)){
+            sql.append(" and status = ?");
+            params.add(Integer.parseInt(status));
+        }
+        
+        if(StrKit.notBlank(type)){
+            sql.append(" and type = ?");
+            params.add(Integer.parseInt(type));
+        }
+        
+        if(StrKit.notBlank(payStatus)){
+            sql.append(" and payStatus = ?");
+            params.add(Integer.parseInt(payStatus));
+        }
+        
         sql.append(" order by createTime desc");
         Page<Send> page = Send.dao.paginate(pageNumber, pageSize, "select * ", sql.toString(), params.toArray());
         return page;
+    }
+    
+    /**
+     * 盘点订单
+     * @return
+     */
+    public Send statisticsOrder(String kdyName, String payStatus, String status, String type, long startTime, long endTime) {
+    	
+    	StringBuffer sql = new StringBuffer("select *, sum(yfPrice) as totalPrice  from delivery_send where 1 = 1 ");
+        List<Object> params = new ArrayList<>();
+        
+        if(startTime > 0){
+        	sql.append(" and createTime >= ?");
+        	
+            params.add(new Date(startTime));
+        }
+        if(endTime > 0){
+        	sql.append(" and createTime <= ?");
+            params.add(new Date(endTime));
+        }
+        
+        if(StrKit.notBlank(kdyName)){
+            sql.append(" and kdyName like ?");
+            params.add("%" + kdyName + "%");
+        }
+        
+        if(StrKit.notBlank(status)){
+            sql.append(" and status = ?");
+            params.add(Integer.parseInt(status));
+        }
+        
+        if(StrKit.notBlank(type)){
+            sql.append(" and type = ?");
+            params.add(Integer.parseInt(type));
+        }
+        
+        if(StrKit.notBlank(payStatus)){
+            sql.append(" and payStatus = ?");
+            params.add(Integer.parseInt(payStatus));
+        }
+        
+    	return Send.dao.findFirst(sql.toString(), params.toArray());
     }
 }
