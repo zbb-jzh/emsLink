@@ -59,7 +59,7 @@
             	<p ms-if="item.status==7">状态：<span style="color:red;">未收件</span></p>
             	<p ms-if="item.status==5">状态：<span style="color:red;">已收件</span></p>
             	<p ms-if="item.status==6">状态：<span style="color:red;">已邮寄</span></p>
-            	<p><button ms-if="item.status == 1"  class="ui-btn" style="float:right;margin-top: -35px;background-color: #18b4ed;"  ms-click="cancleOrder(item.id)">取消</button></p>
+            	<p><button ms-if="item.status == 1 && item.status != 0"  class="ui-btn" style="float:right;margin-top: -35px;background-color: #18b4ed;"  ms-click="cancleOrder(item.id)">取消</button></p>
         		</div>
     			</li>
 			</ul>

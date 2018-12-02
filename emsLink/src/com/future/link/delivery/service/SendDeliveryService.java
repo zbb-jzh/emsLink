@@ -9,6 +9,7 @@ import com.future.link.consumer.model.Consumer;
 import com.future.link.delivery.model.Coupon;
 import com.future.link.delivery.model.Send;
 import com.future.link.goods.model.Category;
+import com.future.link.user.model.User;
 import com.future.link.user.model.WxUser;
 import com.future.link.utils.ToolDateTime;
 import com.jfinal.aop.Before;
@@ -40,7 +41,7 @@ public class SendDeliveryService {
 		send.setAddress(Category.dao.findById(send.getTownId()).getName() + category.getName() + send.getAddress());
 		
 		//代金券支付
-		if(send.getStatus() == 3) {
+		if(send.getPayStatus() == 3) {
 			Coupon coupon = CouponService.service.getCoupon(send.getWxUserId());
 			if(null != coupon) {
 				coupon.setStatus(1);
@@ -115,7 +116,7 @@ public class SendDeliveryService {
 		if(status == 3) {
 			list = Send.dao.find("select * from delivery_send where payStatus = 2 or payStatus = 3 and type = ? order by createTime desc ", type);
 		}else if(status == 1) {
-			list = Send.dao.find("select * from delivery_send where type = ? and payStatus = 0 order by createTime desc ", type);
+			list = Send.dao.find("select * from delivery_send where type = ? and payStatus = 0 and status != 0 order by createTime desc ", type);
 		}else {
 			list = Send.dao.find("select * from delivery_send where type = ? and status = ? order by createTime desc ", type, status);
 		}
@@ -130,10 +131,10 @@ public class SendDeliveryService {
 	 * @param user  and kdyId = ?  , user.getId()
 	 * @return
 	 */
-	public Result searchCourierOrder(int type, int status, Consumer user) {
+	public Result searchCourierOrder(int type, int status, User user) {
 		List<Send> list;
 		
-		list = Send.dao.find("select * from delivery_send where type = ? and status = ? ", type, status);
+		list = Send.dao.find("select * from delivery_send where type = ? and status = ? and kdyId = ? ", type, status, user.getConsumerId());
 		
 		return new Result(Result.SUCCESS_STATUS, list);
 	}

@@ -1,11 +1,15 @@
 package com.future.link.delivery.controller;
 
+import java.net.URLDecoder;
+
 import com.future.link.common.Result;
 import com.future.link.consumer.model.Consumer;
+import com.future.link.consumer.service.ConsumerService;
 import com.future.link.delivery.model.Send;
 import com.future.link.delivery.service.CouponService;
 import com.future.link.delivery.service.SendDeliveryService;
 import com.future.link.goods.service.CategoryService;
+import com.future.link.user.model.User;
 import com.future.link.user.model.WxUser;
 import com.future.link.utils.Constant;
 import com.jfinal.core.Controller;
@@ -52,7 +56,7 @@ public class DeliveryController extends Controller{
 		//状态 1未支付，2，微信支付，3券支付
 		int status = this.getParaToInt("status");
 				
-		Consumer user=(Consumer) this.getRequest().getSession().getAttribute("courierwxuser");
+		User user=(User) this.getRequest().getSession().getAttribute(Constant.SESSION_USER);
 				
 		renderJson(SendDeliveryService.service.searchCourierOrder(type, status, user));
 	}
@@ -179,6 +183,7 @@ public class DeliveryController extends Controller{
 	 */
 	public void getWxUser() {
 		WxUser user=(WxUser) this.getRequest().getSession().getAttribute("wxuser");
+		//user.setNickName(URLDecoder.decode(user.getNickName()));
 		user.setUnusedNum(CouponService.service.countUnusedCoupon(user.getId()));
 		int type = this.getParaToInt("type");
 		Send send = SendDeliveryService.service.findNewSend(user, type);
@@ -187,6 +192,17 @@ public class DeliveryController extends Controller{
 			user.setTeamId(send.getTeamId());
 		}
 		renderJson(new Result(Constant.SUCCESS, user));
+	}
+	
+	/**
+	 * 获取快递员用户信息
+	 */
+	public void getCourierUser() {
+		User user=(User) this.getRequest().getSession().getAttribute(Constant.SESSION_USER);
+		
+		Consumer consumer = Consumer.dao.findById(user.getConsumerId());
+		
+		renderJson(new Result(Constant.SUCCESS, consumer));
 	}
 
 }

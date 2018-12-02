@@ -219,7 +219,7 @@ public class WXController extends Controller {
 //            customerInfo.setUnionId(user_unionid);
             
             WxUser wxuser = WXService.service.addWXUser(user);
-            user.setNickName(URLDecoder.decode(user_nickname, "utf-8"));
+            wxuser.setNickName(URLDecoder.decode(user_nickname, "utf-8"));
             this.getRequest().getSession().setAttribute("wxuser", wxuser);
             String pageUrl = this.getPara("state");
             redirect(pageUrl);

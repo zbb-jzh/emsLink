@@ -194,6 +194,7 @@ var vm = avalon.define({
 			    	if (res.status == 1) {
 			    		console.log('sucess');
 			    		alert("下单成功");
+			    		window.location.href = "../userCenter/mymailings.html";
 			    		//window.location.href = "consumer_node.html";
 			    		//vm.goback();
 	                }else{

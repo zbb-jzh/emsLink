@@ -13,7 +13,7 @@ var vm = avalon.define({
 	yfPrice:'',
 	getOrderList:function(status){
 		$.ajax({
-		    url: "../../../delivery/doSearchWxUserOrder",    //请求的url地址
+		    url: "../../../delivery/doSearchCourierOrder",    //请求的url地址
 		    dataType: "json",   //返回格式为json
 		    data: {type:1, status:status},    //参数值
 		    type: "post",   //请求方式

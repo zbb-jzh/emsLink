@@ -60,7 +60,7 @@
             	<p ms-if="item.payStatus==2">支付状态：<span style="color:red;">微信支付</span></p>
             	<p ms-if="item.payStatus==3">支付状态：<span style="color:red;">优惠券支付</span></p>
             	<p ms-if="item.status==2">状态：<span style="color:red;">已完成</span></p>
-            	<p><button ms-if="item.payStatus == 0"  class="ui-btn" style="float:right;margin-top: -35px;background-color: #18b4ed;"  ms-click="cancleOrder(item.id)">取消</button></p>
+            	<p><button ms-if="item.payStatus == 0 && item.status != 0"  class="ui-btn" style="float:right;margin-top: -35px;background-color: #18b4ed;"  ms-click="cancleOrder(item.id)">取消</button></p>
         		</div>
     			</li>
 			</ul>

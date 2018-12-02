@@ -236,6 +236,7 @@ var vm = avalon.define({
 			    			vm.pay(res.data.id, res.data.yfPrice);
 			    		}else{
 			    			alert("下单成功");
+			    			window.location.href = "../userCenter/mysends.html";
 			    		}
 			    		
 			    		//window.location.href = "consumer_node.html";

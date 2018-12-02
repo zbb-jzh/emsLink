@@ -1,0 +1,304 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+        <title>会员中心</title>
+		<link rel="stylesheet" href="../../frozen/css/frozen.css">
+        <link rel="stylesheet" href="../../demo.css">
+        <link rel="stylesheet" href="../../common/jQuery-ztree/demo.css">
+        <link rel="stylesheet" href="../../common/jQuery-ztree/zTreeStyle.css">
+        <script src="../../frozen/lib/zepto.min.js"></script>
+        <script src="../../frozen/js/frozen.js"></script>
+        <script src="../../jQuery/jQuery-2.2.0.min.js"></script>
+        <script src="../../avalon/avalon.js"></script>
+        <script type="text/javascript" src="../../common/jQuery-ztree/jquery.ztree.core.min.js" > </script>
+		<script type="text/javascript" src="../../common/jQuery-ztree/jquery.ztree.all.min.js" > </script>
+		<script type="text/javascript" src="../../common/tools.js" > </script>
+		<script type="text/javascript" src="data/js/autoFize.js?version=20160920-173444"></script>
+		<link type="text/css" rel="stylesheet" href="data/css/head.css?version=20160920-173444"/>
+		<link type="text/css" rel="stylesheet" href="data/css/styles.min.css?version=20160920-173444"/>
+		<script type="text/javascript" src="data/js/commonNav.js"></script>
+        <script src="my.js"></script>
+        
+		
+        
+    </head>
+	<body ms-controller="mycenter">
+	
+		<main class="jumbotron-main">
+    <section class="masthead-section no-padding-layer no-border-layer">
+        <input type="hidden" value="0" id="fromzdh"/>
+
+        <div class="masthead-login">
+            <figure class="masthead-figure" ms-css-background-image="url({{headimgUrl}})">
+            
+            </figure>
+            <div class="masthead-caption">
+                <h3 class="masthead-caption-title line-ellipsis" >
+                {{consumer.name}}
+                                </h3>
+
+                <p class="masthead-wallet" data-space="&nbsp;" id="underName"></p>
+
+                <!-- <p class="masthead-setting"><a href="javascript:void(0)/member/person/" tjjj="wap.member.person">账户设置<i class="icon icon-right"></i></a></p> -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- <section class="masthead-footerSection normal-layer no-padding-layer i-border-image">
+        <div class="clearfix">
+            <a class="item" href="javascript:void(0)/i/message/type/" tjjj="wap.user.login.message">
+                <div class="sl-item">
+                    <span class="iconWrap">
+                        <i class="advance-icon icon icon-xiaoxi" style="color:#8ad51e;"></i>
+                    
+                    </span>
+                    <span class="text">我的消息</span>
+                </div>
+            </a>
+            <a class="item" href="javascript:void(0)/mall/order/cart/" data-ajax="false" tjjj="wap.user.login.gwc">
+                <div class="sl-item">
+                        <span class="iconWrap">
+                            <i class="advance-icon icon icon-gouwuche" style="color:#ffa201;"></i>
+                        </span>
+                    <span class="text">购物车<span id="cart_num"></span></span>
+                </div>
+            </a>
+        </div>
+    </section> -->
+
+    <!-- <section class="service-section normal-layer no-padding-layer i-border-image">
+        <ul class="feature-list interaction-list">
+            <li class="feature-item">
+                <a href="javascript:void(0)/member/myorder/" tjjj="wap.member.myorder" id="isRetailOrder">
+                    <p class="inner-bar"><span class="order-text">我的订单<em id="orderInfo"></em></span><span class="tip-right text-gray">查看全部订单<i class="icon icon-right"></i></span></p>
+                </a>
+            </li>
+        </ul>
+        <ul class="service-list i-border-image clearfix">
+            <li class="service-item">
+                <a href="javascript:void(0)/member/myorder/wait/pay/" tjjj="wap.member.pay" id="isRetailWaitPay">
+                    <div class="service-cell">
+                        <span class="icon-area"><i class="service-icon pay-icon"></i><em class="icon-tip" id="orderWaitPayCount"></em></span>
+                        <h4 class="service-text">待支付</h4>
+                    </div>
+                </a>
+            </li>
+            <li class="service-item">
+                <a href="javascript:void(0)/member/myorder/wait/delivery/" tjjj="wap.member.delivery" id="isRetailWaitDelivery">
+                    <div class="service-cell">
+                        <span class="icon-area"><i class="service-icon ship-icon"></i><em class="icon-tip" id="orderWaitDeliveryCount"></em></span>
+                        <h4 class="service-text">待发货</h4>
+                    </div>
+                </a>
+            </li>
+            <li class="service-item">
+                <a href="javascript:void(0)/member/myorder/wait/receive/" tjjj="wap.member.receive" id="isRetailWaitReceive">
+                    <div class="service-cell">
+                        <span class="icon-area"><i class="service-icon receive-icon"></i><em class="icon-tip" id="orderWaitReceiveCount"></em></span>
+                        <h4 class="service-text">待收货</h4>
+                    </div>
+                </a>
+            </li>
+            <li class="service-item">
+                <a href="javascript:void(0)/member/myorder/wait/evaluate/" tjjj="wap.member.evaluate" id="isRetailWaitEvaluate">
+                    <div class="service-cell">
+                        <span class="icon-area"><i class="service-icon evaluate-icon"></i><em class="icon-tip" id="orderWaitEvaluateCount"></em></span>
+                        <h4 class="service-text">待评价</h4>
+                    </div>
+                </a>
+            </li>
+            <li class="service-item">
+                <a href="javascript:void(0)/member/refund/order/" tjjj="wap.member.refund">
+                    <div class="service-cell">
+                        <span class="icon-area"><i class="service-icon refund-icon"></i><em class="icon-tip" id="orderReturnCount"></em></span>
+                        <h4 class="service-text">退款/售后</h4>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </section> -->
+
+    <!-- <section class="advance-section normal-layer no-padding-layer no-border-layer">
+        <div class="advance-slider" id="advanceSlider">
+            <div class="swiper-wrapper clearfix">
+                <ul class="swiper-slide advance-list clearfix">
+                    <li class="advance-item">
+                        <a href="javascript:void(0)/member/member_card/" tjjj="wap.user.login.vip">
+                            <div class="advance-cell">
+                                <i class="advance-icon icon icon-vip" style="color:#ffa201;"></i>
+                                <h4 class="advance-text">电子会员卡</h4>
+
+                                <p class="advance-tip line-ellipsis">&nbsp;</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="advance-item">
+                        <a href="javascript:void(0)/member/cash_gift/" tjjj="wap.user.login.zxhb">
+                            <div class="advance-cell">
+                                <i class="advance-icon icon icon-yuan2" style="color:#f1624f;"></i>
+                                <h4 class="advance-text">装修红包</h4>
+
+                                <p class="advance-tip line-ellipsis">&nbsp;</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="advance-item">
+                        <a href="javascript:void(0)/member/my_coupon/" tjjj="wap.user.login.coupon">
+                            <div class="advance-cell">
+                                <i class="advance-icon icon icon-youhui" style="color:#33c8b0;"></i>
+                                <h4 class="advance-text">优惠券</h4>
+
+                                <p class="advance-tip line-ellipsis" id="couponInfo">&nbsp;</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="advance-item">
+                        <a href="javascript:void(0)/member/sdsp/" tjjj="wap.user.login.sdsp">
+                            <div class="advance-cell">
+                                <i class="advance-icon icon icon-bofang" style="color:#32bbe5;"></i>
+                                <h4 class="advance-text">水电视频</h4>
+
+                                <p class="advance-tip line-ellipsis" id="sdsp">&nbsp;</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="advance-item">
+                        <a href="javascript:void(0)/member/my_voucher/" tjjj="wap.user.login.voucher">
+                            <div class="advance-cell">
+                                <i class="advance-icon icon icon-yuan3" style="color:#ef802e;"></i>
+                                <h4 class="advance-text">代金券</h4>
+
+                                <p class="advance-tip line-ellipsis" id="voucherInfo">&nbsp;</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="advance-item">
+                        <a href="javascript:void(0)/member/purse/" tjjj="wap.user.login.purse">
+                            <div class="advance-cell">
+                                <i class="advance-icon icon icon-qianbao" style="color:#f1624f;"></i>
+                                <h4 class="advance-text">齐家钱包</h4>
+
+                                <p class="advance-tip line-ellipsis">&nbsp;</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="advance-item">
+                        <a href="javascript:void(0)/member/yuyue/" tjjj="wap.user.login.yy">
+                            <div class="advance-cell">
+                                <i class="advance-icon icon icon-rili" style="color:#ffa201;"></i>
+                                <h4 class="advance-text">我的预约</h4>
+
+                                <p class="advance-tip line-ellipsis" id="yuyueInfo">&nbsp;</p>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li class="advance-item">
+                        <a href="javascript:void(0)/ask/my_ask/" tjjj="wap.user.login.ask">
+                            <div class="advance-cell">
+                                <i class="advance-icon icon icon-yiwen3" style="color:#32bbe4;"></i>
+                                <h4 class="advance-text">我的问答</h4>
+
+                                <p class="advance-tip line-ellipsis">&nbsp;</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="advance-item">
+                        <a href="javascript:void(0)/member/requirement/" tjjj="wap.user.login.requirement">
+                            <div class="advance-cell">
+                                <i class="advance-icon icon icon-sheji" style="color:#ef802e;"></i>
+                                <h4 class="advance-text">装修需求单</h4>
+
+                                <p class="advance-tip line-ellipsis">&nbsp;</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="advance-item">
+                        <a href="javascript:void(0)/tracking/list/" tjjj="wap.user.login.footPrint">
+                            <div class="advance-cell">
+                                <i class="advance-icon icon icon-zuji" style="color:#32bbe4;"></i>
+                                <h4 class="advance-text">我的足迹</h4>
+
+                                <p class="advance-tip line-ellipsis">&nbsp;</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="advance-item">
+                        <a href="javascript:void(0)/member/prize/" tjjj="wap.user.login.prize">
+                            <div class="advance-cell">
+                                <i class="advance-icon icon icon-liwu" style="color:#f1624f;"></i>
+                                <h4 class="advance-text">我的抽奖</h4>
+
+                                <p class="advance-tip line-ellipsis">&nbsp;</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="advance-item">
+                        <a href="javascript:void(0)/member/collection/item/home/" tjjj="wap.user.login.collection">
+                            <div class="advance-cell">
+                                <i class="advance-icon icon icon-xingxing2" style="color:#f1624f;"></i>
+                                <h4 class="advance-text">我的收藏</h4>
+
+                                <p class="advance-tip line-ellipsis">&nbsp;</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="advance-item">
+                        <a href="javascript:void(0)/member/active_list/" tjjj="wap.user.login.hd">
+                            <div class="advance-cell">
+                                <i class="advance-icon icon icon-hongqi" style="color:#33c8b0;"></i>
+                                <h4 class="advance-text">我的活动</h4>
+
+                                <p class="advance-tip line-ellipsis" id="activeInfo">&nbsp;</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="advance-item">
+                        <a href="javascript:void(0)/user/more/" tjjj="wap.user.login.more">
+                            <div class="advance-cell">
+                                <i class="advance-icon icon icon-gengduo" style="color:#33c8b0;"></i>
+                                <h4 class="advance-text">更多</h4>
+
+                                <p class="advance-tip line-ellipsis">&nbsp;</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="advance-item">
+
+                    </li>
+                    <li class="advance-item">
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="slider-pagination i-border-image"></div>
+    </section> -->
+
+	</main>
+<ul class="ui-list ui-list-single ui-list-link ui-border-tb">
+    <li class="ui-border-t" ms-click="toSend()">
+        <div class="ui-list-info">
+            <h4 class="ui-nowrap">代送快递订单</h4>
+            <!-- <div class="ui-txt-info">男</div> -->
+        </div>
+    </li>
+    <li class="ui-border-t" ms-click="toMailing()">
+        <div class="ui-list-info">
+            <h4 class="ui-nowrap">邮寄快递订单</h4>
+            <!-- <div class="ui-reddot ui-reddot-static"></div> -->
+        </div>
+    </li>
+    <li class="ui-border-t" ms-click="toLoginOut()">
+        <div class="ui-list-info">
+            <h4 class="ui-nowrap">安全退出</h4>
+            <!-- <div class="ui-reddot ui-reddot-static"></div> -->
+        </div>
+    </li>
+</ul>
+<div  ms-include-src="'../common/footer.html'"></div>
+	</body>
+
+</html>
