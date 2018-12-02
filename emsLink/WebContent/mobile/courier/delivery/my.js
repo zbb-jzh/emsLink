@@ -4,7 +4,7 @@
 
 var vm = avalon.define({
 	$id:'mycenter',
-	consumer:{name:0,phone:''},
+	consumer:{name:0,phone:'',withdraws:0},
 	headimgUrl:'http://thirdwx.qlogo.cn/mmopen/vi_32/nUYFrDawI8YRpu5FhJfh98bAsicxbrTe8MZ0bCYYdDW1I86cMjILaibGBNFXvVrlRsXTtJB1ezd3lPfD6969kdDw/132',
 	submited:false,
 	isUpdate:false,

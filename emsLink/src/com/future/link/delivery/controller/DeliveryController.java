@@ -1,10 +1,10 @@
 package com.future.link.delivery.controller;
 
-import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import com.future.link.common.Result;
 import com.future.link.consumer.model.Consumer;
-import com.future.link.consumer.service.ConsumerService;
 import com.future.link.delivery.model.Send;
 import com.future.link.delivery.service.CouponService;
 import com.future.link.delivery.service.SendDeliveryService;
@@ -12,6 +12,7 @@ import com.future.link.goods.service.CategoryService;
 import com.future.link.user.model.User;
 import com.future.link.user.model.WxUser;
 import com.future.link.utils.Constant;
+import com.future.link.utils.ToolDateTime;
 import com.jfinal.core.Controller;
 
 public class DeliveryController extends Controller{
@@ -202,6 +203,17 @@ public class DeliveryController extends Controller{
 		
 		Consumer consumer = Consumer.dao.findById(user.getConsumerId());
 		
+		SimpleDateFormat fmt1= new SimpleDateFormat("yyyy-MM-dd 00:00:00");
+    	SimpleDateFormat fmt2= new SimpleDateFormat("yyyy-MM-dd 23:59:59");
+    	
+    	Date now = new Date();
+    	long startTime = ToolDateTime.parse(fmt1.format(now), "yyyy-MM-dd HH:mm:ss").getTime();
+    	long endTime = ToolDateTime.parse(fmt2.format(now), "yyyy-MM-dd HH:mm:ss").getTime();
+    	
+    	System.out.println("今天的开始时间："+fmt1.format(now));
+    	System.out.println("今天的结束时间："+fmt2.format(now));
+		Send send = SendDeliveryService.service.statisticsOrder(consumer.getName(), "1", "", "", startTime, endTime);
+		consumer.setWithdraws(send.getTotalPrice());
 		renderJson(new Result(Constant.SUCCESS, consumer));
 	}
 
