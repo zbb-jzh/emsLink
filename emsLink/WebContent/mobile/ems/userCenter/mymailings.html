@@ -19,6 +19,23 @@
         <style>
         	#expressData p{padding:5px 0px 5px 0px}
         </style>
+        <style type="text/css">
+			.score span {
+				display: block;
+				width: 20px;
+				height: 20px;
+				float: left;
+				margin-right: 10px;
+			}
+		.star-dark {
+			background: url(data/images/star_dark.png);
+			background-size: 100% 100%;
+			}
+		.star-bright {
+			background: url(data/images/star_bright.png);
+			background-size: 100% 100%;
+			}
+		</style>
     </head>
 	<body ms-controller="mymailings">
 	
@@ -59,7 +76,9 @@
             	<p ms-if="item.status==7">状态：<span style="color:red;">未收件</span></p>
             	<p ms-if="item.status==5">状态：<span style="color:red;">已收件</span></p>
             	<p ms-if="item.status==6">状态：<span style="color:red;">已邮寄</span></p>
-            	<p><button ms-if="item.status == 1 && item.status != 0"  class="ui-btn" style="float:right;margin-top: -35px;background-color: #18b4ed;"  ms-click="cancleOrder(item.id)">取消</button></p>
+            	<p><button ms-if="item.status == 7 && item.status != 0"  class="ui-btn" style="float:right;margin-top: -35px;background-color: #18b4ed;"  ms-click="cancleOrder(item.id)">取消</button></p>
+        		<p><button ms-if="item.status == 6 && item.evaluateStatus == 0"  class="ui-btn" style="float:right;margin-top: -35px;background-color: #18b4ed;"  ms-click="openEvaluateOrder(item.id)">评价</button></p>
+        		<p><button ms-if="item.status == 6 && item.evaluateStatus == 1"  class="ui-btn" style="float:right;margin-top: -35px;background-color: #18b4ed;"  ms-click="lookEvaluate(item.id)">查看评价</button></p>
         		</div>
     			</li>
 			</ul>
@@ -70,6 +89,99 @@
 	</section>
 
     </section>
+    
+    <div class="ui-dialog" id="pingjia">
+			<div class="ui-dialog-cnt">
+				<header class="ui-dialog-hd ui-border-b">
+                  <h3>评价</h3>
+                  <i class="ui-dialog-close" data-role="button" ms-click="closePingjia()"></i>
+				</header>
+				<div class="ui-dialog-bd">
+					<div class="ui-form ui-border-t">
+						<form action="#">
+							<div class="ui-list-info">
+	                <div class="score">
+	                	<span class="star-dark" ms-click="moduleStarsClick(1);"></span>
+	                	<span class="star-dark" ms-click="moduleStarsClick(2);"></span>
+	                	<span class="star-dark" ms-click="moduleStarsClick(3);"></span>
+                        <span class="star-dark" ms-click="moduleStarsClick(4);"></span>
+                        <span class="star-dark" ms-click="moduleStarsClick(5);"></span>
+	                	<!-- <span class="star-bright"></span> -->
+	                </div>
+	            </div>
+							<div class="ui-form-item ui-form-item-textarea  ui-form-item-pure ui-border-b">
+								 
+								<textarea placeholder="评价内容" ms-duplex="evaluateContent"></textarea>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="ui-dialog-ft">
+					<button type="button" data-role="button" ms-click="closePingjia()">取消</button>
+					<button type="button" data-role="button" ms-click="evaluateOrder()">评价</button>
+				</div>
+			</div>        
+		</div>
+		
+		<div class="ui-dialog" id="lookpingjia">
+			<div class="ui-dialog-cnt">
+				<header class="ui-dialog-hd ui-border-b">
+                  <h3>评价</h3>
+                  <i class="ui-dialog-close" data-role="button" ms-click="closelookPingjia()"></i>
+				</header>
+				<div class="ui-dialog-bd">
+					<div class="ui-form ui-border-t">
+						<form action="#">
+							<div class="ui-list-info">
+	                <div class="score" ms-if="starNum >= 1 && starNum < 2">
+				                        <span class="star-bright"></span>
+				                        <span class="star-dark"></span>
+				                        <span class="star-dark"></span>
+				                        <span class="star-dark"></span>
+				                        <span class="star-dark"></span>
+				                    </div>
+				                     <div class="score" ms-if="starNum >= 2 && starNum < 3">
+				                        <span class="star-bright"></span>
+				                        <span class="star-bright"></span>
+				                        <span class="star-dark"></span>
+				                        <span class="star-dark"></span>
+				                        <span class="star-dark"></span>
+				                    </div>
+				                    <div class="score" ms-if="starNum >= 3 && starNum < 4">
+				                        <span class="star-bright"></span>
+				                        <span class="star-bright"></span>
+				                        <span class="star-bright"></span>
+				                        <span class="star-dark"></span>
+				                        <span class="star-dark"></span>
+				                    </div>
+				                    <div class="score" ms-if="starNum >= 4 && starNum < 5">
+				                        <span class="star-bright"></span>
+				                        <span class="star-bright"></span>
+				                        <span class="star-bright"></span>
+				                        <span class="star-bright"></span>
+				                        <span class="star-dark"></span>
+				                    </div>
+				                    <div class="score" ms-if="starNum >= 5">
+				                        <span class="star-bright"></span>
+				                        <span class="star-bright"></span>
+				                        <span class="star-bright"></span>
+				                        <span class="star-bright"></span>
+				                        <span class="star-bright"></span>
+				                    </div>
+	            </div>
+							<div class="ui-form-item ui-form-item-textarea  ui-form-item-pure ui-border-b">
+								 
+								<textarea placeholder="评价内容" ms-duplex="evaluateContent" readonly></textarea>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="ui-dialog-ft">
+					<button type="button" data-role="button" ms-click="closelookPingjia()">关闭</button>
+					
+				</div>
+			</div>        
+		</div>
 
     <script src="http://open.mobile.qq.com/sdk/qqapi.js?_bid=152"></script>
     <script>

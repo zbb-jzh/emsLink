@@ -5,6 +5,24 @@
     <title></title>
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="common/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css">
+    
+    <style type="text/css">
+			.score span {
+				display: block;
+				width: 20px;
+				height: 20px;
+				float: left;
+				margin-right: 10px;
+			}
+		.star-dark {
+			background: url(order/images/star_dark.png);
+			background-size: 100% 100%;
+			}
+		.star-bright {
+			background: url(order/images/star_bright.png);
+			background-size: 100% 100%;
+			}
+		</style>
 </head>
 <body >
   <div ms-controller="sendsorderlist">
@@ -166,6 +184,7 @@
                         <td class="status">
                             <a class="" ms-click="toAU(sendorder.id)" style="cursor: pointer;" ms-if="hasUpdate">修改|</a>
                             <a class="" ms-click="toLookExpress(sendorder)" style="cursor: pointer;" ms-if="hasLook&&sendorder.status==6">查看快递信息|</a>
+                            <a class="" ms-click="toLookEvaluate(sendorder.id)" style="cursor: pointer;" ms-if="hasLook&&(sendorder.status == 2 || sendorder.status==6) && sendorder.evaluateStatus == 1">查看评价|</a>
                             <a class="" ms-click="toshowCancelOrder(sendorder.id)" style="cursor: pointer;" ms-if="hasDelete &&(sendorder.status != 0 && sendorder.status != 2 && sendorder.status != 6)">取消</a>
                         </td>
                     </tr>
@@ -210,6 +229,74 @@
                             </div>
                             <div class="box-footer">
                                 <button type="button" class="btn btn-primary" ms-click="hideExpress()">确认</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade in" style="display:block;" ms-if="showLookEvaluate">
+        <div class="modal-dialog modal-m">
+            <div class="modal-content" style="margin-top:200px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" ms-click="hideLookEvaluate()">
+                        <span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                    </button>
+                    <h3 class="modal-title ng-binding">评价信息</h3>
+                </div>
+                <!-- dialog body -->
+                <div class="modal-body row">
+                    <div class="col-md-10">
+
+                        <form role="form">
+                            <div class="box-body">
+                                <div class="ui-list-info">
+	                				<div class="score" ms-if="starNum >= 1 && starNum < 2">
+				                        <span class="star-bright"></span>
+				                        <span class="star-dark"></span>
+				                        <span class="star-dark"></span>
+				                        <span class="star-dark"></span>
+				                        <span class="star-dark"></span>
+				                    </div>
+				                     <div class="score" ms-if="starNum >= 2 && starNum < 3">
+				                        <span class="star-bright"></span>
+				                        <span class="star-bright"></span>
+				                        <span class="star-dark"></span>
+				                        <span class="star-dark"></span>
+				                        <span class="star-dark"></span>
+				                    </div>
+				                    <div class="score" ms-if="starNum >= 3 && starNum < 4">
+				                        <span class="star-bright"></span>
+				                        <span class="star-bright"></span>
+				                        <span class="star-bright"></span>
+				                        <span class="star-dark"></span>
+				                        <span class="star-dark"></span>
+				                    </div>
+				                    <div class="score" ms-if="starNum >= 4 && starNum < 5">
+				                        <span class="star-bright"></span>
+				                        <span class="star-bright"></span>
+				                        <span class="star-bright"></span>
+				                        <span class="star-bright"></span>
+				                        <span class="star-dark"></span>
+				                    </div>
+				                    <div class="score" ms-if="starNum >= 5">
+				                        <span class="star-bright"></span>
+				                        <span class="star-bright"></span>
+				                        <span class="star-bright"></span>
+				                        <span class="star-bright"></span>
+				                        <span class="star-bright"></span>
+				                    </div>
+	            </div>
+							<div class="ui-form-item ui-form-item-textarea  ui-form-item-pure ui-border-b">
+								 
+								<textarea placeholder="评价内容" ms-duplex="evaluateContent" readonly></textarea>
+							</div>
+                            </div>
+                            <div class="box-footer">
+                                <button type="button" class="btn btn-primary" ms-click="hideLookEvaluate()">确认</button>
                             </div>
                         </form>
                     </div>

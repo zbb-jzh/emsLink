@@ -25,6 +25,9 @@ var vm = avalon.define({
 	expressNo:'',
 	showCancelOrder:false,
 	orderId:'',
+	showLookEvaluate:false,
+	starNum:0,
+	evaluateContent:'',
 	
 	getConsumerList:function(pageNumber, pageSize)
 	{
@@ -127,6 +130,34 @@ var vm = avalon.define({
     },
     hideCancelOrder:function(){
     	vm.showCancelOrder = false;
+    },
+    toLookEvaluate:function(id){
+    	$.ajax({
+		    url: "../delivery/doLookEvaluate",    //请求的url地址
+		    dataType: "json",   //返回格式为json
+		    data: {orderId:id},    //参数值
+		    type: "post",   //请求方式
+		    success: function(res) {
+		    	if (res.status == 1) {
+		    		console.log('sucess');
+		    		$("#lookpingjia").addClass("show");
+		    		vm.starNum = res.data.starNum;
+		    		vm.evaluateContent = res.data.content;
+		    		vm.showLookEvaluate = true;
+		    		
+                }else{
+                	alert(res.data);
+                }
+		    },
+		    error: function() {
+		    	console.log('error');
+		    }
+		});
+    },
+    hideLookEvaluate:function(){
+    	vm.starNum = 0;
+		vm.evaluateContent = '';
+		vm.showLookEvaluate = false;
     },
     toCancelOrder:function()
     {

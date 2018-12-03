@@ -161,4 +161,12 @@ public abstract class BaseSend<M extends BaseSend<M>> extends Model<M> implement
 		return get("expressNo");
 	}
 
+	public void setEvaluateStatus(java.lang.Integer evaluateStatus) {
+		set("evaluateStatus", evaluateStatus);
+	}
+
+	public java.lang.Integer getEvaluateStatus() {
+		return get("evaluateStatus");
+	}
+
 }

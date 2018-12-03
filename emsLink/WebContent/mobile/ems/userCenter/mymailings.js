@@ -7,6 +7,9 @@ var vm = avalon.define({
 	orderList:[],
 	submited:false,
 	isUpdate:false,
+	orderId:'',
+	starNum:0,
+	evaluateContent:'',
 	
 	getOrderList:function(status){
 		$.ajax({
@@ -50,6 +53,73 @@ var vm = avalon.define({
 		    	console.log('error');
 		    }
 		});
+	},
+	openEvaluateOrder:function(id){
+		vm.orderId = id;
+		$("#pingjia").addClass("show");
+	},
+	closePingjia:function(){
+		$("#pingjia").removeClass("show");
+	},
+	moduleStarsClick : function(num) {
+		vm.starNum = num;
+		var total = 5;
+		for (var i = 1; i <= num; i++) {
+			//console.log($(this).parent().children().length);
+			$($(this).parent().children().slice(0,i)).removeClass().addClass('star-bright');
+			$($(this).parent().children().slice(i,total)).removeClass().addClass('star-dark');
+		}
+	},
+	evaluateOrder:function(){
+		$.ajax({
+		    url: "../../../delivery/doEvaluateOrder",    //请求的url地址
+		    dataType: "json",   //返回格式为json
+		    data: {orderId:vm.orderId, starNum:vm.starNum,content:vm.evaluateContent},    //参数值
+		    type: "post",   //请求方式
+		    success: function(res) {
+		    	if (res.status == 1) {
+		    		console.log('sucess');
+		    		$("#pingjia").removeClass("show");
+		    		alert("评价成功");
+		    		vm.getOrderList(6);
+		    		//window.location.href = "consumer_node.html";
+		    		//vm.goback();
+                }else{
+                	alert(res.data);
+                }
+		    },
+		    error: function() {
+		    	console.log('error');
+		    }
+		});
+	},
+	lookEvaluate:function(id){
+		vm.isLook = true;
+		$.ajax({
+		    url: "../../../delivery/doLookEvaluate",    //请求的url地址
+		    dataType: "json",   //返回格式为json
+		    data: {orderId:id},    //参数值
+		    type: "post",   //请求方式
+		    success: function(res) {
+		    	if (res.status == 1) {
+		    		console.log('sucess');
+		    		$("#lookpingjia").addClass("show");
+		    		vm.starNum = res.data.starNum;
+		    		vm.evaluateContent = res.data.content;
+		    		
+                }else{
+                	alert(res.data);
+                }
+		    },
+		    error: function() {
+		    	console.log('error');
+		    }
+		});
+	},
+	closelookPingjia:function(){
+		vm.starNum = 0;
+		vm.evaluateContent = '';
+		$("#lookpingjia").removeClass("show");
 	},
     removeInput:function(name){
     	vm.consumer[name] = '';

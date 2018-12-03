@@ -7,6 +7,7 @@ import com.future.link.common.Result;
 import com.future.link.consumer.model.Consumer;
 import com.future.link.delivery.model.Send;
 import com.future.link.delivery.service.CouponService;
+import com.future.link.delivery.service.EvaluateService;
 import com.future.link.delivery.service.SendDeliveryService;
 import com.future.link.goods.service.CategoryService;
 import com.future.link.user.model.User;
@@ -216,5 +217,27 @@ public class DeliveryController extends Controller{
 		consumer.setWithdraws(send.getTotalPrice());
 		renderJson(new Result(Constant.SUCCESS, consumer));
 	}
-
+	
+	/**
+	 * 评价
+	 */
+	public void doEvaluateOrder() {
+		
+		long orderId = this.getParaToLong("orderId");
+		int starNum = this.getParaToInt("starNum");
+		
+		String content = this.getPara("content");
+		
+		renderJson(EvaluateService.service.addEvaluate(orderId, starNum, content));
+	}
+	
+	/**
+	 * 查看评价
+	 * 
+	 */
+	public void doLookEvaluate() {
+		long orderId = this.getParaToLong("orderId");
+		
+		renderJson(EvaluateService.service.getEvaluate(orderId));
+	}
 }
