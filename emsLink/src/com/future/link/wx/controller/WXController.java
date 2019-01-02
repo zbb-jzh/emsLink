@@ -286,10 +286,10 @@ public class WXController extends Controller {
 			Map map = XMLUtil.doXMLParse(resXml);
 			String prepay_id = (String) map.get("prepay_id");
 			//确认支付过后跳的地址,需要经过urlencode处理
-			String urlString = URLEncoder.encode("http://www.xxxx.com/xxxxx/my_waRecord", "GBK");
+			/*String urlString = URLEncoder.encode("http://www.xxxx.com/xxxxx/my_waRecord", "GBK");
 			String mweb_url = map.get("mweb_url")+"&redirect_url="+urlString;
 			
-			this.getResponse().sendRedirect(mweb_url);
+			this.getResponse().sendRedirect(mweb_url);*/
 			result.put("appid", appid);
 			result.put("nonceStr", nonce_str);
 			result.put("package", "prepay_id="+prepay_id);
