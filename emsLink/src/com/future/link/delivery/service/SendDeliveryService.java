@@ -114,11 +114,11 @@ public class SendDeliveryService {
 	public Result searchWxUserOrder(int type, int status, WxUser user) {
 		List<Send> list;
 		if(status == 3) {
-			list = Send.dao.find("select * from delivery_send where payStatus = 2 or payStatus = 3 and type = ? order by createTime desc ", type);
+			list = Send.dao.find("select * from delivery_send where payStatus = 2 or payStatus = 3 and type = ? and wxUserId = ? order by createTime desc ", type, user.getId());
 		}else if(status == 1) {
-			list = Send.dao.find("select * from delivery_send where type = ? and payStatus = 0 and status != 0 order by createTime desc ", type);
+			list = Send.dao.find("select * from delivery_send where type = ? and wxUserId = ? and payStatus = 0 and status != 0 order by createTime desc ", type, user.getId());
 		}else {
-			list = Send.dao.find("select * from delivery_send where type = ? and status = ? order by createTime desc ", type, status);
+			list = Send.dao.find("select * from delivery_send where type = ? and wxUserId = ? and status = ? order by createTime desc ", type, user.getId(), status);
 		}
 		
 		return new Result(Result.SUCCESS_STATUS, list);
