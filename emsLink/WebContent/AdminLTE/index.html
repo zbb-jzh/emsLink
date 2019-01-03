@@ -340,8 +340,8 @@
             <i class="fa fa-dashboard"></i> <span>{{p.name}}</span> <i class="fa fa-angle-left pull-right"></i>
           </a>
           
-          <ul class="treeview-menu" ms-repeat-ps="p.subList">
-            <li ms-class="active:ps.active" ms-click="click(ps)"><a href="#"><i class="fa fa-circle-o"></i> {{ps.name}}</a></li>
+          <ul class="treeview-menu" >
+            <li ms-repeat-ps="p.subList" ms-class="active:ps.active" ms-click="click(ps)"><a href="#"><i class="fa fa-circle-o"></i> {{ps.name}}</a></li>
             <!-- <li><a href="#"><i class="fa fa-circle-o"></i> 客户管理</a></li> -->
           </ul>
         </li>
